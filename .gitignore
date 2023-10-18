@@ -3,6 +3,6 @@
 # dependencies
 /node_modules
 # misc
-config.env
+config/config.env
 
 
