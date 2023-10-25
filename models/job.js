@@ -41,71 +41,92 @@ const jobSchema = new mongoose.Schema(
     },
     processTable: [
       {
-        process: {
+        processName: {
           type: String,
           required: true,
         },
-        description: {
-          type: String,
-          required: true,
-        },
-        machineName: {
-          type: String,
-          required: true,
-        },
-        toolingUsed: {
-          type: [String],
-          required: true,
-        },
-        length: {
-          type: Number,
-          required: true,
-        },
-        width: {
-          type: Number,
-          required: true,
-        },
-        dc: { type: Number, required: true },
-        feed: { type: Number, required: true },
-        estimatedCT: {
-          type: Number,
-          required: true,
-        },
-        actualCT: {
-          type: Number,
-        },
-        startDate: {
-          type: Date,
-        },
-        startTime: {
-          type: String,
-        },
-        endTime: {
-          type: String,
-        },
+        process: [
+          {
+            subProcessName: {
+              type: String,
+              required: true,
+            },
+            description: {
+              type: String,
+              required: true,
+            },
+            machineName: {
+              type: String,
+              required: true,
+            },
+            toolingUsed: {
+              type: String,
+              required: true,
+            },
+            toolingSize: {
+              type: String,
+              required: true,
+            },
+            dia: {
+              type: String,
+              required: true,
+            },
+            length: {
+              type: Number,
+              required: true,
+            },
+            width: {
+              type: Number,
+              required: true,
+            },
+            dc: { type: Number },
+            mr: { type: Number },
+            nop: { type: Number },
+            fpp: { type: Number },
+            feed: { type: Number },
+            rpm: { type: Number },
+            noh: { type: Number },
+            estimatedCT: {
+              type: Number,
+              required: true,
+            },
+            actualCT: {
+              type: Number,
+            },
+            startDate: {
+              type: Date,
+            },
+            startTime: {
+              type: String,
+            },
+            endTime: {
+              type: String,
+            },
 
-        endDate: {
-          type: Date,
-        },
-        idleCode: {
-          type: String,
-        },
-        startDate1: {
-          type: Date,
-        },
-        startTime1: {
-          type: String,
-        },
-        endTime1: {
-          type: String,
-        },
+            endDate: {
+              type: Date,
+            },
+            idleCode: {
+              type: String,
+            },
+            startDate1: {
+              type: Date,
+            },
+            startTime1: {
+              type: String,
+            },
+            endTime1: {
+              type: String,
+            },
 
-        endDate1: {
-          type: Date,
-        },
-        userName: {
-          type: String,
-        },
+            endDate1: {
+              type: Date,
+            },
+            userName: {
+              type: String,
+            },
+          },
+        ],
       },
     ],
   },
