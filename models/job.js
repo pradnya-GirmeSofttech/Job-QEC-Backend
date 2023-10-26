@@ -45,9 +45,9 @@ const jobSchema = new mongoose.Schema(
           type: String,
           required: true,
         },
-        process: [
+        processTableData: [
           {
-            subProcessName: {
+            process: {
               type: String,
               required: true,
             },
@@ -65,19 +65,19 @@ const jobSchema = new mongoose.Schema(
             },
             toolingSize: {
               type: String,
-              required: true,
+              // required: true,
             },
             dia: {
               type: String,
-              required: true,
+              // required: true,
             },
             length: {
               type: Number,
-              required: true,
+              // required: true,
             },
             width: {
               type: Number,
-              required: true,
+              // required: true,
             },
             dc: { type: Number },
             mr: { type: Number },
