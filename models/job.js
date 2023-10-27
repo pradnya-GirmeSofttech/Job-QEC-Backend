@@ -88,7 +88,6 @@ const jobSchema = new mongoose.Schema(
             noh: { type: Number },
             estimatedCT: {
               type: Number,
-              required: true,
             },
             actualCT: {
               type: Number,
