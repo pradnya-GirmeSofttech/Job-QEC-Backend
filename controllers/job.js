@@ -146,14 +146,19 @@ export const generatePdf = async (req, res) => {
   try {
     const jobId = req.params.id;
     console.log("backend", jobId);
-
     // Fetch job data from the database (you can use Mongoose or your preferred ORM)
     const job = await Job.findById(jobId);
-
+    console.log(job.processTable);
+    job?.processTable.map((row, rowIndex) => {
+      {
+        row.processTableData.map((item, index) => {
+          console.log(item);
+        });
+      }
+    });
     if (!job) {
       return res.status(404).json({ message: "Job not found" });
     }
-
     // Create HTML content for the PDF using the job data
     const htmlContent = `
     <!DOCTYPE html>
@@ -162,133 +167,187 @@ export const generatePdf = async (req, res) => {
     <style>
     /* Add your CSS styles here */
     @page {
-      size: A4 landscape; /* Set the page size to A4 landscape */
+      size: legal landscape; /* Set the page size to A4 landscape */
       margin: 10mm 20mm;
     }
     body {
       text-align: center; /* Center-align the content horizontally */
+      font-family: font-family: 'Montserrat', sans-serif;
     }
-
     table {
       border-collapse: collapse;
       width: 100%;
+      font-family:'Montserrat', sans-serif;
     }
-
     th, td {
       border: 1px solid black;
-      padding: 8px;
-      text-align: center;
+      padding-top : 2px;
+      padding-bottom:2px;
+      text-align: left;
       font-size: 10px;
+      font-family: 'Montserrat', sans-serif;
     }
-
     th {
-      background-color: #f2f2f2;
+      background-color: #F2F2F2;
     }
   </style>
     </head>
     <body>
       <div class="box">
-      <h2>Quality Engineering CO.</h2>
-      <p>Gat.No.317,Pune-Saswad Road,Opp.Palkhi Visawa,Tal-Purander, Zendewadi,Pune-412-301</p>
-      <h3>Job Process Sheet</h3>
+      <h2 style="font-family: 'Montserrat', sans-serif;">Quality Engineering CO.</h2>
+<p style="font-family: 'Montserrat', sans-serif;">Gat.No.317,Pune-Saswad Road,Opp.Palkhi Visawa,Tal-Purander, Zendewadi,Pune-412-301</p>
+<h3 style="font-family: 'Montserrat', sans-serif;">Job Process Sheet</h3>
         <div class="table-container">
           <table>
             <tbody>
               <tr>
-                <td >SO/Wo No</td>
-                <td >${job?.soWo}</td>
-                <td >Prod.Order No</td>
-                <td >${job?.prodOrderNo}</td>
-                <td >WO Date</td>
-                <td >${format(new Date(job?.woDate), "dd/MM/yyyy")}</td>
+               <td style="text-align: left;">SO/Wo No</td>
+<td style="text-align: left;">${job?.soWo}</td>
+<td style="text-align: left;">Prod.Order No : ${job?.prodOrderNo}</td>
+                <td >WO Date : ${format(
+                  new Date(job?.woDate),
+                  "dd/MM/yyyy"
+                )}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total CT : ${
+      job?.estimatedtotalCT
+    }</td>
               </tr>
               <tr>
-                <td >Job Name</td>
-                <td colspan="1">${job?.jobName}</td>
-                <td >PO No</td>
-                <td >${job?.poNo}</td>
-                <td>Total CT</td>
-                <td>${job?.estimatedtotalCT}</td>
+                <td>Job Name</td>
+                <td colspan="2">${job?.jobName}</td>
+                <td colspan="2">PO No : ${job?.poNo}</td>
               </tr>
               <tr>
                 <td>Drag No</td>
-                <td>${job?.dragNo}</td>
-                <td colspan="4"></td>
+                <td colspan="2">${job?.dragNo}</td>
+                <td colspan="2"></td>
               </tr>
             </tbody>
           </table>
         </div>
-        <div class="table-container" style="margin-top: 4rem;">
-          <table  >
+        <div class="table-container" style="margin-top: 2rem;">
+  <table>
+    <tbody>
+      <tr>
+        <th style="text-align: left;">अ.क्र.</th>
+        <th style="text-align: left;">महत्वाच्या सूचना</th>
+        <th style="text-align: left;">टिक मार्क</th>
+        <th style="text-align: left;">सही व दिनांक</th>
+      </tr>
+       <tr>
+        <td style="text-align: left;">१</td>
+        <td style="text-align: left;">जॉबचा प्रोसेस चार्ट बनविण्यापूर्वी, त्याच्या शक्य त्या साईजेस चेक करून घेणे.</td>
+        <td style="text-align: left;"></td>
+        <td style="text-align: left;"></td>
+      </tr>
+      <tr>
+        <td style="text-align: left;">२</td>
+        <td style="text-align: left;">जॉब तोड करण्यापूर्वी ड्रॉईंग आणि प्रोसेस चार्ट प्रोडक्शन इन्चार्जन सुपरवायजरला समजावून सांगणे.</td>
+        <td style="text-align: left;"></td>
+        <td style="text-align: left;"></td>
+      </tr>
+      <tr>
+        <td style="text-align: left;">३</td>
+        <td style="text-align: left;">जॉब तोड करण्यापूर्वी ड्रॉइंग आणि प्रोसेस चार्ट सुपरवायजरने मशीन ऑपरेटरला समजावून सांगणे.</td>
+        <td style="text-align: left;"></td>
+        <td style="text-align: left;"></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+        <div class="table-container">
+          <table>
             <thead>
               <tr>
                 <th>Sr.No</th>
-                <th>Process</th>
-                <th>Description</th>
-                <th>Machine Name</th>
-                <th>Tooling Used</th>
-                <th>DC</th>
-                
-                <th>Feed</th>
-                <th>CT(min)</th>
-                <th>Start Date</th>
-                <th>Start Time</th>
-                <th>End Date</th>
-                <th>End Time</th>
-                <th>Ideal Code</th>
-                <th>Start Date</th>
-                <th>Start Time</th>
-                <th>End Date</th>
-                <th>End Time</th>
-                
+                <th style="width: 400px;">Process</th>
+                <th style="width: 200px;">Description</th>
+                <th style="width: 400px;">Machine Name</th>
+                <th style="width: 400px;">Tooling Used</th>
+                <th style="width: 80px;">DC</th>
+                <th style="width: 50px;">Feed</th>
+                <th style="width: 50px;">CT(min)</th>
+                <th style="width: 50px;">Start Date</th>
+                <th style="width: 50px;">Start Time</th>
+                <th style="width: 50px;">End Date</th>
+                <th style="width: 50px;">End Time</th>
+                <th style="width: 50px;">Ideal Code</th>
+                <th style="width: 50px;">Start Time</th>
+                <th style="width: 50px;">End Time</th>
               </tr>
             </thead>
-            <tbody>
-          
-              
-            ${job?.processTable.map((row, rowIndex) => {
-              return `
+              ${job?.processTable.map((row, rowIndex) => {
+                return `
                 <tr>
                 <td>${rowIndex + 1}</td>
-                  <td colspan="16" >${row.processName}</td>
+                  <td>${row.processName}</td>
+                  <td style="text-align: left;"></td>
+        <td style="text-align: left;"></td>
+        <td style="text-align: left;"></td>
+        <td style="text-align: left;"></td>
+        <td style="text-align: left;"></td>
+        <td style="text-align: left;"></td>
+        <td style="text-align: left;"></td>
+        <td style="text-align: left;"></td>
+        <td style="text-align: left;"></td>
+        <td style="text-align: left;"></td>
+        <td style="text-align: left;"></td>
+        <td style="text-align: left;"></td>
+        <td style="text-align: left;"></td>
                 </tr>
                 ${row.processTableData
                   .map((item, index) => {
                     return `
                     <tr>
                       <td>${index + 1}</td>
-                      <td>${item.process}</td>
-                      <td>${item.machineName}</td>
-                      <td>
-                        ${item.toolingUsed}
-                      </td>
-                      <td>${item.dc}</td>
-                      <td>${item.feed}</td>
-                      <td>${item.actualCT}</td>
-                      <td>${format(new Date(item.startDate), "dd/MM/yyyy")}</td>
-                      <td>${item.startTime}</td>
-                      <td>${format(new Date(item.endDate), "dd/MM/yyyy")}</td>
-                      <td>${item.endTime}</td>
-                      <td>${item.idleCode}</td>
-                      <td>${format(new Date(item.startDate), "dd/MM/yyyy")}</td>
-                      <td>${item.startTime}</td>
-                      <td>${format(new Date(item.startDate), "dd/MM/yyyy")}</td>
-                      <td>${item.endTime}</td>
+                      <td>${row.processTableData[index]?.process}</td>
+                      <td>${row.processTableData[index]?.description}</td>
+                      <td>${row.processTableData[index]?.machineName}</td>
+                      <td>${row.processTableData[index]?.toolingUsed}</td>
+                      <td style="width: 80px;">${
+                        row.processTableData[index]?.dc
+                      }</td>
+                      <td style="width: 80px;">${
+                        row.processTableData[index]?.feed
+                      }</td>
+                      <td style="width: 80px;">${row.processTableData[
+                        index
+                      ]?.actualCT.toFixed(2)}</td>
+                    <td style="width: 50px;">${format(
+                      new Date(row.processTableData[index]?.startDate),
+                      "dd/MM/yyyy"
+                    )}</td>
+                    <td style="width: 80px;">${
+                      row.processTableData[index]?.startTime
+                    }</td>
+                    <td style="width: 80px;">${format(
+                      new Date(row.processTableData[index]?.endDate),
+                      "dd/MM/yyyy"
+                    )}</td>
+                    <td style="width: 80px;">${
+                      row.processTableData[index]?.endTime
+                    }</td>
+                    <td style="width: 80px;">${
+                      row.processTableData[index]?.idleCode
+                    }</td>
+                    <td style="width: 80px;">${
+                      row.processTableData[index]?.startTime1
+                    }</td>
+                    <td style="width: 80px;">${
+                      row.processTableData[index]?.endTime1
+                    }</td>
                     </tr>
                   `;
                   })
                   .join("")}
               `;
-            })}
+              })}
             </tbody>
           </table>
         </div>
       </div>
     </body>
     </html>
-    
     `;
-
     // Generate the PDF
     pdf
       .create(htmlContent, { format: "Letter" })
