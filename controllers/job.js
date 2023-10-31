@@ -246,36 +246,40 @@ export const generatePdf = async (req, res) => {
             <tbody>
           
               
-              ${job?.processTable.map((row, rowIndex) => {
-                return `<tr style="font-size: 1px;">
-                    <td>${rowIndex + 1}</td>
-                    <td>${row.process}</td>
-                    <td>${row.description}</td>
-                    <td>${row.machineName}</td>
-                    <td> ${row.toolingUsed.map(
-                      (item) => `<ul >
-                      <li style="list-style-type: none;">${item}</li>
-                      
-                    </ul>`
-                    )}</td>
-                    <td>${row.dc}</td>
-                   
-                    <td>${row.feed}</td>
-                    <td>${row.actualCT}</td>
-                    <td>${format(new Date(row?.startDate), "dd/MM/yyyy")}</td>
-                    <td>${row.startTime}</td>
-                    <td>${format(new Date(row?.endDate), "dd/MM/yyyy")}</td>
-                    <td>${row.endTime}</td>
-                    <td>${row.idleCode}</td>
-                    <td>${format(new Date(row?.startDate), "dd/MM/yyyy")}</td>
-                    <td>${row.startTime}</td>
-                    <td>${format(new Date(row?.startDate), "dd/MM/yyyy")}</td>
-                    <td>${row.endTime}</td>
-                    
-                  </tr>`;
-              })}
-                
-              </tr>
+            ${job?.processTable.map((row, rowIndex) => {
+              return `
+                <tr>
+                <td>${rowIndex + 1}</td>
+                  <td colspan="16" >${row.processName}</td>
+                </tr>
+                ${row.processTableData
+                  .map((item, index) => {
+                    return `
+                    <tr>
+                      <td>${index + 1}</td>
+                      <td>${item.process}</td>
+                      <td>${item.machineName}</td>
+                      <td>
+                        ${item.toolingUsed}
+                      </td>
+                      <td>${item.dc}</td>
+                      <td>${item.feed}</td>
+                      <td>${item.actualCT}</td>
+                      <td>${format(new Date(item.startDate), "dd/MM/yyyy")}</td>
+                      <td>${item.startTime}</td>
+                      <td>${format(new Date(item.endDate), "dd/MM/yyyy")}</td>
+                      <td>${item.endTime}</td>
+                      <td>${item.idleCode}</td>
+                      <td>${format(new Date(item.startDate), "dd/MM/yyyy")}</td>
+                      <td>${item.startTime}</td>
+                      <td>${format(new Date(item.startDate), "dd/MM/yyyy")}</td>
+                      <td>${item.endTime}</td>
+                    </tr>
+                  `;
+                  })
+                  .join("")}
+              `;
+            })}
             </tbody>
           </table>
         </div>

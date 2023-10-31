@@ -49,19 +49,15 @@ const jobSchema = new mongoose.Schema(
           {
             process: {
               type: String,
-              required: true,
             },
             description: {
               type: String,
-              required: true,
             },
             machineName: {
               type: String,
-              required: true,
             },
             toolingUsed: {
               type: String,
-              required: true,
             },
             toolingSize: {
               type: String,
@@ -86,6 +82,9 @@ const jobSchema = new mongoose.Schema(
             feed: { type: Number },
             rpm: { type: Number },
             noh: { type: Number },
+            estimatedHrs: {
+              type: Number,
+            },
             estimatedCT: {
               type: Number,
             },
