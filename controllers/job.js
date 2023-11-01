@@ -376,7 +376,47 @@ export const generatePdf = async (req, res) => {
             </tbody>
           </table>
         </div>
+     
       </div>
+         <div class="table-container" style="margin-top:10px">
+       <table>
+  <tr>
+    <td style="text-align: left;">1. No Power (Electricity)</td>
+    <td style="text-align: left;">5. No Crane (Electricity)</td>
+    <td style="text-align: left;">9. Waiting for dicision (Electricity)</td>
+    <td style="text-align: left;">13. No Load/ No Plan</td>
+    <td style="text-align: left;">17. Use of Worm out tooling/ Tooling problem</td>
+    <td style="text-align: left;">21. Operator not allocated</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;">2. Drawing Issue</td>
+    <td style="text-align: left;">6. No Air (Electricity)</td>
+    <td style="text-align: left;">10. Discountinue current load (Electricity)</td>
+    <td style="text-align: left;">14. Rework during Operations (Electricity)</td>
+    <td style="text-align: left;">18. Stores - Collection of Tools/Drags/Instruments/Gauges etc (Electricity)</td>
+    <td style="text-align: left;">22. Process Deviation</td>
+  
+  </tr>
+  <tr>
+    <td style="text-align: left;">3. Weekly Off</td>
+    <td style="text-align: left;">7. Stores - Collection of Tools/Drags/Instruments/Gauges etc (Electricity)</td>
+    <td style="text-align: left;">11. Availability of Co worker load</td>
+    <td style="text-align: left;">15. Planned Maintainance</td>
+    <td style="text-align: left;">19. Searching and collecting componenet to be loaded</td>
+    <td style="text-align: left;">23. Mentance Team Availability</td>
+    </tr>
+  <tr>
+    <td style="text-align: left;">4. Material Issue</td>
+    <td style="text-align: left;">8. Minor Machine Breakdown</td>
+    <td style="text-align: left;">12. Operator Absent/ Late mark</td>
+    <td style="text-align: left;">16. Unskilled operator on machine</td>
+    <td style="text-align: left;">20. Operator shifted for other work during operations </td>
+    <td style="text-align: left;">14. Inspection on Machine</td>
+  
+    
+  </tr>
+</table>
+</div>
     </body>
     </html>
     
