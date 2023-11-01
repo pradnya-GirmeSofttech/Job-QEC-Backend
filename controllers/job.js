@@ -146,7 +146,6 @@ export const generatePdf = async (req, res) => {
   try {
     const jobId = req.params.id;
     console.log("backend", jobId);
-
     // Fetch job data from the database (you can use Mongoose or your preferred ORM)
     const job = await Job.findById(jobId);
     console.log(job.processTable);
@@ -160,7 +159,6 @@ export const generatePdf = async (req, res) => {
     if (!job) {
       return res.status(404).json({ message: "Job not found" });
     }
-
     // Create HTML content for the PDF using the job data
     const htmlContent = `
     <!DOCTYPE html>
@@ -187,7 +185,6 @@ export const generatePdf = async (req, res) => {
       font-family:'Montserrat', sans-serif;
      
     }
-
     th, td {
       border: 1px solid black;
      
@@ -198,7 +195,6 @@ export const generatePdf = async (req, res) => {
       font-family: 'Montserrat', sans-serif; 
      
     }
-
     th {
       background-color: #f2f2f2;
      
@@ -210,7 +206,6 @@ export const generatePdf = async (req, res) => {
       <h2 style="font-family: 'Montserrat', sans-serif;">Quality Engineering CO.</h2>
 <p style="font-family: 'Montserrat', sans-serif;">Gat.No.317,Pune-Saswad Road,Opp.Palkhi Visawa,Tal-Purander, Zendewadi,Pune-412-301</p>
 <h3 style="font-family: 'Montserrat', sans-serif;">Job Process Sheet</h3>
-
         <div class="table-container">
           <table>
             <tbody>
@@ -419,9 +414,7 @@ export const generatePdf = async (req, res) => {
 </div>
     </body>
     </html>
-    
     `;
-
     // Generate the PDF
     pdf
       .create(htmlContent, { format: "Letter" })
