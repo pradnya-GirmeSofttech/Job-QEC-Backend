@@ -319,6 +319,78 @@ export const generatePdf = async (req, res) => {
                 </tr>
                 ${row.processTableData
                   .map((item, index) => {
+                    const idleCode = row.processTableData[index]?.idleCode;
+                    let displayIdleCode = idleCode;
+                    if (idleCode === "No Power (Electricity)") {
+                      displayIdleCode = "1";
+                    } else if (idleCode === "Drawing Issue") {
+                      displayIdleCode = "2";
+                    } else if (idleCode === "Weekly Off") {
+                      displayIdleCode = "3";
+                    } else if (idleCode === "Material Issue") {
+                      displayIdleCode = "4";
+                    } else if (idleCode === "No Crane (Electricity)") {
+                      displayIdleCode = "5";
+                    } else if (idleCode === "No Air (Electricity)") {
+                      displayIdleCode = "6";
+                    } else if (
+                      idleCode ===
+                      "Stores - Collection of Tools/Drags/Instruments/Gauges etc (Electricity)"
+                    ) {
+                      displayIdleCode = "7";
+                    } else if (idleCode === "Minor Machine Breakdown") {
+                      displayIdleCode = "8";
+                    } else if (
+                      idleCode === "Waiting for dicision (Electricity)"
+                    ) {
+                      displayIdleCode = "9";
+                    } else if (
+                      idleCode === "Discountinue current load (Electricity)"
+                    ) {
+                      displayIdleCode = "10";
+                    } else if (idleCode === "Availability of Co worker load") {
+                      displayIdleCode = "11";
+                    } else if (idleCode === "Operator Absent/ Late mark") {
+                      displayIdleCode = "12";
+                    } else if (idleCode === "No Load/ No Plan") {
+                      displayIdleCode = "13";
+                    } else if (
+                      idleCode === "Rework during Operations (Electricity)"
+                    ) {
+                      displayIdleCode = "14";
+                    } else if (idleCode === "Planned Maintainance") {
+                      displayIdleCode = "15";
+                    } else if (idleCode === "Unskilled operator on machine") {
+                      displayIdleCode = "16";
+                    } else if (
+                      idleCode === "Use of Worm out tooling/ Tooling problem"
+                    ) {
+                      displayIdleCode = "17";
+                    } else if (
+                      idleCode ===
+                      "Stores - Collection of Tools/Drags/Instruments/Gauges etc (Electricity)"
+                    ) {
+                      displayIdleCode = "18";
+                    } else if (
+                      idleCode ===
+                      "Searching and collecting componenet to be loaded"
+                    ) {
+                      displayIdleCode = "19";
+                    } else if (
+                      idleCode ===
+                      "Operator shifted for other work during operations"
+                    ) {
+                      displayIdleCode = "20";
+                    } else if (idleCode === "Operator not allocated") {
+                      displayIdleCode = "21";
+                    } else if (idleCode === "Process Deviation") {
+                      displayIdleCode = "22";
+                    } else if (idleCode === "Maintenance Team Availability") {
+                      displayIdleCode = "23";
+                    } else if (idleCode === "Inspection on Machine") {
+                      displayIdleCode = "24";
+                    }
+
                     return `
                     
                     <tr>
@@ -350,9 +422,7 @@ export const generatePdf = async (req, res) => {
                     <td style="width: 80px;">${
                       row.processTableData[index]?.endTime
                     }</td>
-                    <td style="width: 80px;">${
-                      row.processTableData[index]?.idleCode
-                    }</td>
+                    <td style="width: 80px;">${displayIdleCode}</td>
                     <td style="width: 80px;">${
                       row.processTableData[index]?.startTime1
                     }</td>
@@ -406,7 +476,7 @@ export const generatePdf = async (req, res) => {
     <td style="text-align: left;">12. Operator Absent/ Late mark</td>
     <td style="text-align: left;">16. Unskilled operator on machine</td>
     <td style="text-align: left;">20. Operator shifted for other work during operations </td>
-    <td style="text-align: left;">14. Inspection on Machine</td>
+    <td style="text-align: left;">24. Inspection on Machine</td>
   
     
   </tr>
