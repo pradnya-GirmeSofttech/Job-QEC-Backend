@@ -1,9 +1,9 @@
 export const sendToken = (res, user, statusCode, message) => {
   const token = user.getJWTToken();
-
+  console.log(token);
   const options = {
-    secure: true,
-    httpOnly: true,
+    // secure: true,
+    // httpOnly: true,
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
     ),
