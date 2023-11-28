@@ -8,7 +8,6 @@ const jobSchema = new mongoose.Schema(
     },
     prodOrderNo: {
       type: Number,
-      required: true,
     },
 
     estimatedtotalCT: {
