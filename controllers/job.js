@@ -495,7 +495,7 @@ export const generatePdf = async (req, res) => {
       .create(htmlContent, { format: "Letter" })
       .toFile(filename, (err, response) => {
         if (err) {
-          res.status(500).send("Error generating PDF", err);
+          response.status(500).send("Error generating PDF");
         } else {
           // Send the generated PDF as a response
           res.setHeader(
@@ -507,13 +507,13 @@ export const generatePdf = async (req, res) => {
           fileStream.pipe(res);
 
           // Optionally, you can delete the file after sending it
-          fs.unlink(filename, (err) => {
-            if (err) {
-              console.error("Error deleting PDF file:", err);
-            } else {
-              console.log("PDF file deleted");
-            }
-          });
+          // fs.unlink(filename, (err) => {
+          //   if (err) {
+          //     console.error("Error deleting PDF file:", err);
+          //   } else {
+          //     console.log("PDF file deleted");
+          //   }
+          // });
         }
       });
   } catch (error) {
