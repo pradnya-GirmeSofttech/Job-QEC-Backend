@@ -3,8 +3,20 @@ import { User } from "../models/users.js";
 
 export const isAuthenticated = async (req, res, next) => {
   try {
-    const { token } = req.cookies;
-    console.log("token", req.cookies);
+    // const { token } = req.cookies;
+    if (!req.headers.authorization) {
+      return next(
+        new MfmError(400, "No authorization token is sent with request")
+      );
+    }
+
+    if (!req.headers.authorization.startsWith("Bearer")) {
+      return next(
+        new MfmError(400, "Authorization token should be of Bearer type")
+      );
+    }
+
+    const token = req.headers.authorization.split(" ")[1];
     if (!token) {
       return res.status(401).json({ success: false, message: "Login first" });
     }
