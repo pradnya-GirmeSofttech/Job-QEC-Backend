@@ -138,7 +138,7 @@ export const getAllJob = async (req, res) => {
       .status(200)
       .json({ success: true, message: "Jobs found successfully", jobs });
   } catch (error) {
-    console.error(error);
+    console.log(error);
     res.status(500).json({ success: true, error: error.message });
   }
 };
@@ -495,6 +495,8 @@ export const generatePdf = async (req, res) => {
       .create(htmlContent, { format: "Letter" })
       .toFile(filename, (err, response) => {
         if (err) {
+          console.log("Error generating PDF:", err);
+
           res.status(500).send("Error generating PDF");
         } else {
           // Send the generated PDF as a response
