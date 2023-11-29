@@ -2,6 +2,7 @@ import { Job } from "../models/job.js";
 import pdf from "html-pdf";
 import fs from "fs";
 import { format } from "date-fns";
+import { v4 as uuidv4 } from "uuid";
 export const createJob = async (req, res) => {
   try {
     const {
@@ -145,10 +146,10 @@ export const getAllJob = async (req, res) => {
 export const generatePdf = async (req, res) => {
   try {
     const jobId = req.params.id;
-    console.log("backend", jobId);
+
     // Fetch job data from the database (you can use Mongoose or your preferred ORM)
     const job = await Job.findById(jobId);
-    console.log(job.processTable);
+
     job?.processTable.map((row, rowIndex) => {
       {
         row.processTableData.map((item, index) => {
@@ -486,17 +487,33 @@ export const generatePdf = async (req, res) => {
     </html>
     `;
     // Generate the PDF
+
+    const uniqueIdentifier = uuidv4();
+    const filename = `job${uniqueIdentifier}.pdf`;
+
     pdf
       .create(htmlContent, { format: "Letter" })
-      .toFile("output.pdf", (err, response) => {
+      .toFile(filename, (err, response) => {
         if (err) {
           res.status(500).send("Error generating PDF");
         } else {
           // Send the generated PDF as a response
-          res.setHeader("Content-disposition", "attachment; filename=job.pdf");
+          res.setHeader(
+            "Content-disposition",
+            `attachment; filename=${filename}`
+          );
           res.setHeader("Content-type", "application/pdf");
-          const fileStream = fs.createReadStream("output.pdf");
+          const fileStream = fs.createReadStream(filename);
           fileStream.pipe(res);
+
+          // Optionally, you can delete the file after sending it
+          fs.unlink(filename, (err) => {
+            if (err) {
+              console.error("Error deleting PDF file:", err);
+            } else {
+              console.log("PDF file deleted");
+            }
+          });
         }
       });
   } catch (error) {
