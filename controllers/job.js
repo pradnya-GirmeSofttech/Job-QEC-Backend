@@ -495,7 +495,7 @@ export const generatePdf = async (req, res) => {
       .create(htmlContent, { format: "Letter" })
       .toFile(filename, (err, response) => {
         if (err) {
-          console.log("Error generating PDF:", err);
+          console.log(err);
 
           res.status(500).send("Error generating PDF");
         } else {
