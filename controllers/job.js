@@ -155,7 +155,7 @@ export const generatePdf = async (req, res) => {
     job?.processTable.map((row, rowIndex) => {
       {
         row.processTableData.map((item, index) => {
-          console.log(item);
+          // console.log(item);
         });
       }
     });
