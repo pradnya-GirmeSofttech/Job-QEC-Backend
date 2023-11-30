@@ -31,11 +31,7 @@ app.use(cors());
 //     credentials: true, // Allow cookies and credentials to be sent
 //   })
 // );
-app.use((req, res, next) => {
-  console.log("Incoming request:", req.method, req.url);
-  console.log("Cookies:", req.cookies);
-  next();
-});
+
 app.use(cookieParser());
 app.use("/api/v1", User);
 app.use("/api/v1", Job);
