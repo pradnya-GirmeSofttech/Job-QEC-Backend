@@ -490,7 +490,7 @@ export const generatePdf = async (req, res) => {
     `;
 
     const browser = await puppeteer.launch({
-      headless: "new", // Specify the new headless mode
+      headless: "false", // Specify the new headless mode
     });
 
     const page = await browser.newPage();
