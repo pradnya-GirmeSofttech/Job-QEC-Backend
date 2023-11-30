@@ -3,8 +3,7 @@ import pdf from "html-pdf";
 import fs from "fs";
 import { format } from "date-fns";
 import { v4 as uuidv4 } from "uuid";
-
-import path from "path";
+import puppeteer from "puppeteer";
 
 export const createJob = async (req, res) => {
   try {
@@ -490,40 +489,57 @@ export const generatePdf = async (req, res) => {
     </html>
     `;
 
-    // Pipe the PDF document to the response stream
+    const browser = await puppeteer.launch({
+      headless: "new",
+    });
+    const page = await browser.newPage();
+    // Set content and wait for rendering
+    await page.setContent(htmlContent, { waitUntil: "domcontentloaded" });
 
+    // Generate PDF
+    const pdfBuffer = await page.pdf();
+
+    // Save or send the PDF as needed
+    // For example, save to a file
+
+    fs.writeFileSync("output.pdf", pdfBuffer);
+
+    await browser.close();
+    // Pipe the PDF document to the response stream
+    res.status(500).json({ success: true, message: "sucessfully generate" });
+    console.log("pdf successfully generate");
     // Generate the PDF
 
-    const uniqueIdentifier = uuidv4();
-    const filename = `job${uniqueIdentifier}.pdf`;
+    // const uniqueIdentifier = uuidv4();
+    // const filename = `job${uniqueIdentifier}.pdf`;
 
-    pdf
-      .create(htmlContent, { format: "Letter" })
-      .toFile(filename, (err, response) => {
-        if (err) {
-          console.log(err);
+    // pdf
+    //   .create(htmlContent, { format: "Letter" })
+    //   .toFile(filename, (err, response) => {
+    //     if (err) {
+    //       console.log(err);
 
-          res.status(500).send("Error generating PDF");
-        } else {
-          // Send the generated PDF as a response
-          res.setHeader(
-            "Content-disposition",
-            `attachment; filename=${filename}`
-          );
-          res.setHeader("Content-type", "application/pdf");
-          const fileStream = fs.createReadStream(filename);
-          fileStream.pipe(res);
+    //       res.status(500).send("Error generating PDF");
+    //     } else {
+    //       // Send the generated PDF as a response
+    //       res.setHeader(
+    //         "Content-disposition",
+    //         `attachment; filename=${filename}`
+    //       );
+    //       res.setHeader("Content-type", "application/pdf");
+    //       const fileStream = fs.createReadStream(filename);
+    //       fileStream.pipe(res);
 
-          // Optionally, you can delete the file after sending it
-          // fs.unlink(filename, (err) => {
-          //   if (err) {
-          //     console.error("Error deleting PDF file:", err);
-          //   } else {
-          //     console.log("PDF file deleted");
-          //   }
-          // });
-        }
-      });
+    // Optionally, you can delete the file after sending it
+    // fs.unlink(filename, (err) => {
+    //   if (err) {
+    //     console.error("Error deleting PDF file:", err);
+    //   } else {
+    //     console.log("PDF file deleted");
+    //   }
+    // });
+    // }
+    // });
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, error: error.message });
