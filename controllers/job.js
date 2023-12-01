@@ -492,6 +492,7 @@ export const generatePdf = async (req, res) => {
     const browser = await puppeteer.launch({
       headless: true, // Set to true for production
       args: ["--no-sandbox"],
+      ignoreDefaultArgs: ["--disable-extensions"],
     });
     const page = await browser.newPage();
     // Set content and wait for rendering
