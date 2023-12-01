@@ -5,6 +5,7 @@ import { format } from "date-fns";
 import { v4 as uuidv4 } from "uuid";
 import puppeteer from "puppeteer";
 import { executablePath } from "puppeteer";
+import path from "path";
 export const createJob = async (req, res) => {
   try {
     const {
@@ -491,9 +492,15 @@ export const generatePdf = async (req, res) => {
 
     const browser = await puppeteer.launch({
       headless: true, // Set to true for production
-      args: ["--no-sandbox"],
-      ignoreDefaultArgs: ["--disable-extensions"],
-      executablePath: "C:/Program Files/Google/Chrome/Application/chrome.exe",
+      executablePath: path.join(
+        "C:",
+        "Program Files",
+        "Google",
+        "Chrome",
+        "Application",
+        "chrome.exe"
+      ),
+      // executablePath: "C:/Program Files/Google/Chrome/Application/chrome.exe",
     });
     const page = await browser.newPage();
     // Set content and wait for rendering
