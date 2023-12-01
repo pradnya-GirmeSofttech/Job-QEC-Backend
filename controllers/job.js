@@ -4,7 +4,7 @@ import fs from "fs";
 import { format } from "date-fns";
 import { v4 as uuidv4 } from "uuid";
 import puppeteer from "puppeteer";
-
+import { executablePath } from "puppeteer";
 export const createJob = async (req, res) => {
   try {
     const {
@@ -493,6 +493,7 @@ export const generatePdf = async (req, res) => {
       headless: true, // Set to true for production
       args: ["--no-sandbox"],
       ignoreDefaultArgs: ["--disable-extensions"],
+      executablePath: executablePath(),
     });
     const page = await browser.newPage();
     // Set content and wait for rendering
