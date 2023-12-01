@@ -493,7 +493,7 @@ export const generatePdf = async (req, res) => {
       headless: true, // Set to true for production
       args: ["--no-sandbox"],
       ignoreDefaultArgs: ["--disable-extensions"],
-      executablePath: executablePath(),
+      executablePath: "C:/Program Files/Google/Chrome/Application/chrome.exe",
     });
     const page = await browser.newPage();
     // Set content and wait for rendering
