@@ -500,6 +500,7 @@ export const generatePdf = async (req, res) => {
         "Application",
         "chrome.exe"
       ),
+      args: ["--no-sandbox", "--disabled-setupid-sandbox"],
       // executablePath: "C:/Program Files/Google/Chrome/Application/chrome.exe",
     });
     const page = await browser.newPage();
