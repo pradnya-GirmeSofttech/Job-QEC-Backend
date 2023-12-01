@@ -1,10 +1,11 @@
 import { Job } from "../models/job.js";
-import pdf from "html-pdf";
+// import pdf from "html-pdf";
 import fs from "fs";
 import { format } from "date-fns";
 import { v4 as uuidv4 } from "uuid";
 import puppeteer from "puppeteer";
 import { executablePath } from "puppeteer";
+import pdf from "html-pdf-node";
 import path from "path";
 export const createJob = async (req, res) => {
   try {
@@ -490,36 +491,36 @@ export const generatePdf = async (req, res) => {
     </html>
     `;
 
-    const browser = await puppeteer.launch({
-      headless: false, // Set to true for production
-      executablePath: path.join(
-        "C:",
-        "Program Files",
-        "Google",
-        "Chrome",
-        "Application",
-        "chrome.exe"
-      ),
-      args: ["--no-sandbox", "--disabled-setupid-sandbox"],
-      ignoreDefaultArgs: ["--disable-extensions"],
-      // executablePath: "C:/Program Files/Google/Chrome/Application/chrome.exe",
-    });
-    const page = await browser.newPage();
-    // Set content and wait for rendering
-    await page.setContent(htmlContent, { waitUntil: "domcontentloaded" });
-    // Generate PDF
-    const pdfBuffer = await page.pdf();
-    // Close the browser
-    await browser.close();
-    // Set response headers
-    res.setHeader("Content-Type", "application/pdf");
-    res.setHeader(
-      "Content-Disposition",
-      `attachment; filename="job_process_sheet.pdf"`
-    );
-    // Send the PDF as a response
-    res.send(pdfBuffer);
-    console.log("PDF successfully generated and sent");
+    // const browser = await puppeteer.launch({
+    //   headless: false, // Set to true for production
+    //   executablePath: path.join(
+    //     "C:",
+    //     "Program Files",
+    //     "Google",
+    //     "Chrome",
+    //     "Application",
+    //     "chrome.exe"
+    //   ),
+    //   args: ["--no-sandbox", "--disabled-setupid-sandbox"],
+    //   ignoreDefaultArgs: ["--disable-extensions"],
+    //   // executablePath: "C:/Program Files/Google/Chrome/Application/chrome.exe",
+    // });
+    // const page = await browser.newPage();
+    // // Set content and wait for rendering
+    // await page.setContent(htmlContent, { waitUntil: "domcontentloaded" });
+    // // Generate PDF
+    // const pdfBuffer = await page.pdf();
+    // // Close the browser
+    // await browser.close();
+    // // Set response headers
+    // res.setHeader("Content-Type", "application/pdf");
+    // res.setHeader(
+    //   "Content-Disposition",
+    //   `attachment; filename="job_process_sheet.pdf"`
+    // );
+    // // Send the PDF as a response
+    // res.send(pdfBuffer);
+    // console.log("PDF successfully generated and sent");
     // Generate the PDF
 
     // const uniqueIdentifier = uuidv4();
@@ -552,6 +553,19 @@ export const generatePdf = async (req, res) => {
     // });
     // }
     // });
+
+    const options = { format: "A4", margin: "10mm" };
+    // Generate PDF
+    const pdfBuffer = await pdf.generatePdf({ content: htmlContent }, options);
+    // Set response headers
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="job_process_sheet.pdf"`
+    );
+    // Send the PDF as a response
+    res.send(pdfBuffer);
+    console.log("PDF successfully generated and sent");
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, error: error.message });
