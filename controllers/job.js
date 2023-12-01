@@ -490,24 +490,24 @@ export const generatePdf = async (req, res) => {
     `;
 
     const browser = await puppeteer.launch({
-      headless: "new",
+      headless: true, // Set to true for production
     });
     const page = await browser.newPage();
     // Set content and wait for rendering
     await page.setContent(htmlContent, { waitUntil: "domcontentloaded" });
-
     // Generate PDF
     const pdfBuffer = await page.pdf();
-
-    // Save or send the PDF as needed
-    // For example, save to a file
-
-    fs.writeFileSync("output.pdf", pdfBuffer);
-
+    // Close the browser
     await browser.close();
-    // Pipe the PDF document to the response stream
-    res.status(500).json({ success: true, message: "sucessfully generate" });
-    console.log("pdf successfully generate");
+    // Set response headers
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="job_process_sheet.pdf"`
+    );
+    // Send the PDF as a response
+    res.send(pdfBuffer);
+    console.log("PDF successfully generated and sent");
     // Generate the PDF
 
     // const uniqueIdentifier = uuidv4();
