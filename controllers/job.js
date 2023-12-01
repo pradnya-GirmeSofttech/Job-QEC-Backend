@@ -491,7 +491,7 @@ export const generatePdf = async (req, res) => {
     `;
 
     const browser = await puppeteer.launch({
-      headless: true, // Set to true for production
+      headless: false, // Set to true for production
       executablePath: path.join(
         "C:",
         "Program Files",
