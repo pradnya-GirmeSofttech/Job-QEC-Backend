@@ -179,7 +179,7 @@ export const generatePdf = async (req, res) => {
      
       text-align: center; /* Center-align the content horizontally */
      
-      font-family: 'Arial', sans-serif;
+      font-family: 'Noto Sans', sans-serif;
     }
    
 
