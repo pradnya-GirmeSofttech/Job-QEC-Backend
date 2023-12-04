@@ -169,6 +169,7 @@ export const generatePdf = async (req, res) => {
     <!DOCTYPE html>
     <html>
     <head>
+    <meta charset="UTF-8">
     <style>
     /* Add your CSS styles here */
     @page {
