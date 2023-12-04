@@ -169,7 +169,7 @@ export const generatePdf = async (req, res) => {
     <!DOCTYPE html>
     <html lang="mr">
     <head>
-    <meta charset="UTF-8">
+  
     <style>
     /* Add your CSS styles here */
     @page {
@@ -206,6 +206,7 @@ export const generatePdf = async (req, res) => {
      
     }
   </style>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=YourMarathiFont&display=swap">
     </head>
     <body>
       <div class="box">
@@ -249,9 +250,9 @@ export const generatePdf = async (req, res) => {
     <tbody>
       <tr>
         <th style="text-align: left;">अ.क्र.</th>
-        <th style="text-align: left;">महत्वाच्या सूचना</th>
-        <th style="text-align: left;">टिक मार्क</th>
-        <th style="text-align: left;">सही व दिनांक</th>
+        <th style="text-align: left; font-family: 'YourMarathiFont'">महत्वाच्या सूचना</th>
+        <th style="text-align: left; font-family: 'YourMarathiFont'">टिक मार्क</th>
+        <thstyle="text-align: left; font-family: 'YourMarathiFont';">सही व दिनांक</th>
       </tr>
        <tr>
         <td style="text-align: left;">१</td>
