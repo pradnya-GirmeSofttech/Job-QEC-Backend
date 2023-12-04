@@ -167,7 +167,7 @@ export const generatePdf = async (req, res) => {
     // Create HTML content for the PDF using the job data
     const htmlContent = `
     <!DOCTYPE html>
-    <html>
+    <html lang="mr">
     <head>
     <meta charset="UTF-8">
     <style>
