@@ -6,13 +6,13 @@ export const isAuthenticated = async (req, res, next) => {
     // const { token } = req.cookies;
     if (!req.headers.authorization) {
       return next(
-        new MfmError(400, "No authorization token is sent with request")
+        new Error(400, "No authorization token is sent with request")
       );
     }
 
     if (!req.headers.authorization.startsWith("Bearer")) {
       return next(
-        new MfmError(400, "Authorization token should be of Bearer type")
+        new Error(400, "Authorization token should be of Bearer type")
       );
     }
 
