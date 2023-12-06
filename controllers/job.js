@@ -169,7 +169,9 @@ export const generatePdf = async (req, res) => {
     <!DOCTYPE html>
     <html lang="mr">
     <head>
-  
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Marathi&display=swap" rel="stylesheet">
     <style>
     /* Add your CSS styles here */
     @page {
@@ -180,7 +182,7 @@ export const generatePdf = async (req, res) => {
      
       text-align: center; /* Center-align the content horizontally */
      
-      font-family: 'Noto Sans', sans-serif;
+      font-family: 'Tiro Devanagari Marathi', serif;
     }
    
 
@@ -206,7 +208,7 @@ export const generatePdf = async (req, res) => {
      
     }
   </style>
-  
+ 
     </head>
     <body>
       <div class="box">
