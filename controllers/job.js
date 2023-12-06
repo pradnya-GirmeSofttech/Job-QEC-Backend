@@ -171,7 +171,7 @@ export const generatePdf = async (req, res) => {
     <head>
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Marathi&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@300&family=Poppins:wght@100;200;300;400;600;700&family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
     /* Add your CSS styles here */
     @page {
@@ -182,7 +182,9 @@ export const generatePdf = async (req, res) => {
      
       text-align: center; /* Center-align the content horizontally */
      
-      font-family: 'Tiro Devanagari Marathi', serif;
+      font-family: 'Noto Serif Devanagari', serif;
+      font-family: 'Poppins', sans-serif;
+      font-family: 'Roboto Condensed', sans-serif;
     }
    
 
@@ -251,7 +253,7 @@ export const generatePdf = async (req, res) => {
   <table>
     <tbody>
       <tr>
-        <th style="text-align: left;">अ.क्र.</th>
+        <th style="text-align: left;"><p>अ.क्र.</p></th>
         <th style="text-align: left; font-family: 'YourMarathiFont'">महत्वाच्या सूचना</th>
         <th style="text-align: left; font-family: 'YourMarathiFont'">टिक मार्क</th>
         <th style="text-align: left;">सही व दिनांक</th>
