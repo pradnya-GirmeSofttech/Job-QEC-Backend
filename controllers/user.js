@@ -174,14 +174,8 @@ export const resetPassword = async (req, res) => {
 export const addUser = async (req, res) => {
   try {
     const { name, email } = req.body;
-    const randomPassword = generatePassword();
-    const text = `Welcome to QEC!! 
-     Please find your login details below .
-      Email: ${email}
 
-     Password: ${randomPassword} `;
-    await sendMail(req.body.email, "Invitation mail", text);
-
+    // Check if user already exists
     let user = await User.findOne({ email });
     if (user) {
       return res
@@ -189,17 +183,27 @@ export const addUser = async (req, res) => {
         .json({ success: false, message: "User already exists" });
     }
 
+    // Generate a random password
+    const randomPassword = generatePassword();
+
+    // Compose the email text
+    const text = `Welcome to QEC!! 
+      Please find your login details below.
+      Email: ${email}
+      Password: ${randomPassword} `;
+
+    // Send the mail
+    await sendMail(email, "Invitation mail", text);
+
+    // Create the user
     user = await User.create({
       name,
       email,
       password: randomPassword,
       role: "user",
     });
-    // res
-    //   .status(200)
-    //   .json({ success: true, message: `Credentials sent on ${email}` });
-    console.log("user", user);
 
+    // Send the response
     sendToken(
       res,
       user,
