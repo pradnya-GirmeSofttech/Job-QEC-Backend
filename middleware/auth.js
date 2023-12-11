@@ -23,6 +23,11 @@ export const isAuthenticated = async (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     req.user = await User.findById(decoded._id);
+    if (req.user.role !== "admin" && req.user.role !== "user") {
+      return res
+        .status(403)
+        .json({ success: false, message: "Access denied. Invalid user role." });
+    }
 
     // Check user role and restrict access if necessary
     // if (req.user.role !== "admin") {

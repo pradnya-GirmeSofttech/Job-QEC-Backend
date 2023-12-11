@@ -29,7 +29,7 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, role } = req.body;
 
     if (!email || !password) {
       return res
@@ -54,7 +54,32 @@ export const login = async (req, res) => {
         .json({ success: false, message: "Invalid Email or Password" });
     }
 
-    sendToken(res, user, 200, "Login Successful");
+    // sendToken(res, user, 200, "Login Successful");
+    if (user.role === "admin") {
+      if (req.user && req.user.role === "user") {
+        return res
+          .status(403)
+          .json({
+            success: false,
+            message: "Access denied. Admin credentials used on user side.",
+          });
+      }
+      sendToken(res, user, 200, "Admin Login Successful");
+    } else if (user.role === "user") {
+      if (req.user && req.user.role === "admin") {
+        return res
+          .status(403)
+          .json({
+            success: false,
+            message: "Access denied. User credentials used on admin side.",
+          });
+      }
+      sendToken(res, user, 200, "User Login Successful");
+    } else {
+      return res
+        .status(403)
+        .json({ success: false, message: "Access denied. Invalid user role." });
+    }
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
