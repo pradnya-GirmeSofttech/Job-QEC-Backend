@@ -302,6 +302,7 @@ export const viewUserDetails = async (req, res) => {
 export const getMyProfile = async (req, res) => {
   try {
     // const user = await User.findById(req.user._id);
+    console.log(req.user.role);
     if (req.user.role === "admin" || req.user.role === "user") {
       const user = await User.findById(req.user._id);
       res.status(201).json({ success: true, user });
