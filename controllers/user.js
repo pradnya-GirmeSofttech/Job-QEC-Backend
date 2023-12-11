@@ -301,10 +301,14 @@ export const viewUserDetails = async (req, res) => {
 
 export const getMyProfile = async (req, res) => {
   try {
-    const user = await User.findById(req.user._id);
+    // const user = await User.findById(req.user._id);
+    if (req.user.role === "admin" || req.user.role === "user") {
+      const user = await User.findById(req.user._id);
+      res.status(201).json({ success: true, user });
+    }
 
     // sendToken(res, user, 201, `Welcome back ${user.name}`);
-    res.status(201).json({ success: true, user });
+    // res.status(201).json({ success: true, user });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
