@@ -29,12 +29,25 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, role } = req.body;
 
     if (!email || !password) {
       return res
         .status(400)
         .json({ success: false, message: "Please enter all fields" });
+    }
+    const isUserSide = req.headers["x-user-side"] === "true";
+
+    // Check if the request is from the admin side
+    const isAdminSide = req.headers["x-admin-side"] === "true";
+
+    if (isUserSide && isAdminSide) {
+      return res
+        .status(400)
+        .json({
+          success: false,
+          message: "Invalid request. Specify either user or admin side.",
+        });
     }
 
     const user = await User.findOne({ email }).select("+password");
@@ -53,8 +66,29 @@ export const login = async (req, res) => {
         .status(400)
         .json({ success: false, message: "Invalid Email or Password" });
     }
-
-    sendToken(res, user, 200, "Login Successful");
+    if (user.role === "admin" && isUserSide) {
+      return res
+        .status(403)
+        .json({
+          success: false,
+          message: "Access denied. Admin credentials used on user side.",
+        });
+    } else if (user.role === "user" && isAdminSide) {
+      return res
+        .status(403)
+        .json({
+          success: false,
+          message: "Access denied. User credentials used on admin side.",
+        });
+    } else {
+      sendToken(
+        res,
+        user,
+        200,
+        `${user.role === "admin" ? "Admin" : "User"} Login Successful`
+      );
+    }
+    // sendToken(res, user, 200, "Login Successful");
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
@@ -301,10 +335,15 @@ export const viewUserDetails = async (req, res) => {
 
 export const getMyProfile = async (req, res) => {
   try {
-    const user = await User.findById(req.user._id);
+    // const user = await User.findById(req.user._id);
+    console.log(req.user.role);
+    if (req.user.role === "admin" || req.user.role === "user") {
+      const user = await User.findById(req.user._id);
+      res.status(201).json({ success: true, user });
+    }
 
     // sendToken(res, user, 201, `Welcome back ${user.name}`);
-    res.status(201).json({ success: true, user });
+    // res.status(201).json({ success: true, user });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
