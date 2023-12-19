@@ -169,9 +169,9 @@ export const generatePdf = async (req, res) => {
     <!DOCTYPE html>
     <html lang="mr">
     <head>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@300&family=Poppins:wght@100;200;300;400;600;700&family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@300&family=Poppins:wght@100;200;300;400;600;700&family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
     /* Add your CSS styles here */
     @page {
@@ -182,8 +182,8 @@ export const generatePdf = async (req, res) => {
      
       text-align: center; /* Center-align the content horizontally */
      
-      font-family: 'Noto Serif Devanagari', serif;
-      font-family: 'Poppins', sans-serif;
+            font-family: 'Noto Serif Devanagari', 'Poppins', 'Roboto Condensed', sans-serif;
+font-family: 'Poppins', sans-serif;
       font-family: 'Roboto Condensed', sans-serif;
     }
    
