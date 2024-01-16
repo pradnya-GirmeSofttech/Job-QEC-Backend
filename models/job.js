@@ -122,6 +122,9 @@ const jobSchema = new mongoose.Schema(
             userName: {
               type: String,
             },
+            remark: {
+              type: String,
+            },
           },
         ],
       },
