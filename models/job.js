@@ -104,7 +104,7 @@ const jobSchema = new mongoose.Schema(
               type: Date,
             },
             idleCode: {
-              type: String,
+              type: [String],
             },
             startDate1: {
               type: Date,
