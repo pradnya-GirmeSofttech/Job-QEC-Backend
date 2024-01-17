@@ -103,11 +103,10 @@ const jobSchema = new mongoose.Schema(
             endDate: {
               type: Date,
             },
-            idleCode: [
-              {
-                type: String,
-              },
-            ],
+            idleCode: {
+              type: [String],
+              default: [], // Set default value to an empty array
+            },
 
             startDate1: {
               type: Date,
