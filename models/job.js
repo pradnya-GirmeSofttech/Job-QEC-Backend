@@ -104,8 +104,10 @@ const jobSchema = new mongoose.Schema(
               type: Date,
             },
             idleCode: {
-              type: String,
+              type: [String],
+              default: [], // Set default value to an empty array
             },
+
             startDate1: {
               type: Date,
             },
@@ -120,6 +122,9 @@ const jobSchema = new mongoose.Schema(
               type: Date,
             },
             userName: {
+              type: String,
+            },
+            remark: {
               type: String,
             },
           },

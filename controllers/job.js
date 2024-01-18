@@ -249,37 +249,7 @@ font-family: 'Poppins', sans-serif;
             </tbody>
           </table>
         </div>
-        <div class="table-container" style="margin-top: 2rem;">
-  <table>
-    <tbody>
-      <tr>
-        <th style="text-align: left;"><p>अ.क्र.</p></th>
-        <th style="text-align: left; font-family: 'YourMarathiFont'">महत्वाच्या सूचना</th>
-        <th style="text-align: left; font-family: 'YourMarathiFont'">टिक मार्क</th>
-        <th style="text-align: left;">सही व दिनांक</th>
-      </tr>
-       <tr>
-        <td style="text-align: left;">१</td>
-        <td style="text-align: left;">जॉबचा प्रोसेस चार्ट बनविण्यापूर्वी, त्याच्या शक्य त्या साईजेस चेक करून घेणे.</td>
-        <td style="text-align: left;"></td>
-        <td style="text-align: left;"></td>
-      </tr>
-      <tr>
-        <td style="text-align: left;">२</td>
-        <td style="text-align: left;">जॉब तोड करण्यापूर्वी ड्रॉईंग आणि प्रोसेस चार्ट प्रोडक्शन इन्चार्जन सुपरवायजरला समजावून सांगणे.</td>
-        <td style="text-align: left;"></td>
-        <td style="text-align: left;"></td>
-      </tr>
-      <tr>
-        <td style="text-align: left;">३</td>
-        <td style="text-align: left;">जॉब तोड करण्यापूर्वी ड्रॉइंग आणि प्रोसेस चार्ट सुपरवायजरने मशीन ऑपरेटरला समजावून सांगणे.</td>
-        <td style="text-align: left;"></td>
-        <td style="text-align: left;"></td>
-      </tr>
-     
-    </tbody>
-  </table>
-</div>
+       
         <div class="table-container">
           <table>
             <thead>
