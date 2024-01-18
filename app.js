@@ -3,6 +3,10 @@ import User from "./routers/User.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import Job from "./routers/Job.js";
+import Machine from "./routers/Machine.js";
+import Process from "./routers/Process.js";
+import Tools from "./routers/Tools.js";
+
 export const app = express();
 const allowedOrigins = [
   "http://localhost:3000",
@@ -35,3 +39,6 @@ app.use(cors());
 app.use(cookieParser());
 app.use("/api/v1", User);
 app.use("/api/v1", Job);
+app.use("/api/v1", Machine);
+app.use("/api/v1", Process);
+app.use("/api/v1", Tools);
