@@ -172,39 +172,45 @@ export const generatePdf = async (req, res) => {
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
    <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=YourMarathiFont&display=swap" rel="stylesheet">
-
- <style>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@300&family=Poppins:wght@100;200;300;400;600;700&family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
     /* Add your CSS styles here */
     @page {
-      size: legal landscape;
+      size: legal landscape; /* Set the page size to A4 landscape */
       margin: 10mm 20mm;     
     }
     body {
-      text-align: center;
-      font-family: 'YourMarathiFont', 'Noto Serif Devanagari', 'Poppins', 'Roboto Condensed', sans-serif;
-      font-family: 'Poppins', sans-serif;
+     
+      text-align: center; /* Center-align the content horizontally */
+     
+            font-family: 'Noto Serif Devanagari', 'Poppins', 'Roboto Condensed', sans-serif;
+font-family: 'Poppins', sans-serif;
       font-family: 'Roboto Condensed', sans-serif;
     }
+   
+
 
     table {
       border-collapse: collapse;
       width: 100%;
-      font-family: 'YourMarathiFont', 'Montserrat', sans-serif;
+      font-family:'Montserrat', sans-serif;
+     
     }
     th, td {
       border: 1px solid black;
-      padding-top: 2px;
-      padding-bottom: 2px;
+     
+      padding-top : 2px;
+      padding-bottom:2px;
       text-align: left;
       font-size: 10px;
-      font-family: 'YourMarathiFont', 'Montserrat', sans-serif;
+      font-family: 'Montserrat', sans-serif; 
+     
     }
     th {
       background-color: #f2f2f2;
+     
     }
   </style>
-
  
     </head>
     <body>
@@ -212,38 +218,7 @@ export const generatePdf = async (req, res) => {
       <h2 style="font-family: 'Montserrat', sans-serif;">Quality Engineering CO.</h2>
 <p style="font-family: 'Montserrat', sans-serif;">Gat.No.317,Pune-Saswad Road,Opp.Palkhi Visawa,Tal-Purander, Zendewadi,Pune-412-301</p>
 <h3 style="font-family: 'Montserrat', sans-serif;">Job Process Sheet</h3>
-<div class="table-container" style="margin-top: 2rem;">
-  <table>
-    <tbody>
-      <tr>
-        <th style="text-align: left;"><p>अ.क्र.</p></th>
-        <th style="text-align: left; font-family: 'YourMarathiFont'">महत्वाच्या सूचना</th>
-        <th style="text-align: left; font-family: 'YourMarathiFont'">टिक मार्क</th>
-        <th style="text-align: left;">सही व दिनांक</th>
-      </tr>
-       <tr>
-        <td style="text-align: left;">१</td>
-        <td style="text-align: left;">जॉबचा प्रोसेस चार्ट बनविण्यापूर्वी, त्याच्या शक्य त्या साईजेस चेक करून घेणे.</td>
-        <td style="text-align: left;"></td>
-        <td style="text-align: left;"></td>
-      </tr>
-      <tr>
-        <td style="text-align: left;">२</td>
-        <td style="text-align: left;">जॉब तोड करण्यापूर्वी ड्रॉईंग आणि प्रोसेस चार्ट प्रोडक्शन इन्चार्जन सुपरवायजरला समजावून सांगणे.</td>
-        <td style="text-align: left;"></td>
-        <td style="text-align: left;"></td>
-      </tr>
-      <tr>
-        <td style="text-align: left;">३</td>
-        <td style="text-align: left;">जॉब तोड करण्यापूर्वी ड्रॉइंग आणि प्रोसेस चार्ट सुपरवायजरने मशीन ऑपरेटरला समजावून सांगणे.</td>
-        <td style="text-align: left;"></td>
-        <td style="text-align: left;"></td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-        <div class="table-container" style:"margin:5">
-
+        <div class="table-container">
           <table>
             <tbody>
               <tr>
