@@ -242,7 +242,7 @@ export const generatePdf = async (req, res) => {
     </tbody>
   </table>
 </div>
-        <div class="table-container">
+        <div class="table-container" style:"margin:5">
 
           <table>
             <tbody>
