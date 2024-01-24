@@ -169,6 +169,7 @@ export const generatePdf = async (req, res) => {
     <!DOCTYPE html>
     <html lang="mr">
     <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
    <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@300&family=Poppins:wght@100;200;300;400;600;700&family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
