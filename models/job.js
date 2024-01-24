@@ -44,6 +44,9 @@ const jobSchema = new mongoose.Schema(
           type: String,
           required: true,
         },
+        setting: {
+          type: Number,
+        },
         processTableData: [
           {
             process: {
