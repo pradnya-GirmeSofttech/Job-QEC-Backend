@@ -167,11 +167,10 @@ export const generatePdf = async (req, res) => {
     // Create HTML content for the PDF using the job data
     const htmlContent = `
     <!DOCTYPE html>
-    <html lang="mr">
+    <html>
     <head>
     <meta charset="UTF-8"> 
-   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link rel="preconnect" href="https://fonts.googleapis.com"
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@300&family=Poppins:wght@100;200;300;400;600;700&family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
     /* Add your CSS styles here */
