@@ -182,12 +182,10 @@ export const generatePdf = async (req, res) => {
     body { 
       text-align: center; /* Center-align the content horizontally */
       font-family:  font-family: 'Arial Unicode MS', sans-serif;
-      font-family: 'Roboto Condensed', sans-serif;
          }
     table {
       border-collapse: collapse;
       width: 100%;
-      font-family:'Montserrat', sans-serif;
      
     }
     th, td {
@@ -196,7 +194,7 @@ export const generatePdf = async (req, res) => {
       padding-bottom:2px;
       text-align: left;
       font-size: 10px;
-      font-family: 'Montserrat', sans-serif; 
+     
      
     }
     th {
