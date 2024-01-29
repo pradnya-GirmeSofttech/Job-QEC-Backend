@@ -180,13 +180,10 @@ export const generatePdf = async (req, res) => {
       margin: 10mm 20mm;     
     }
     body {
-     
-      text-align: center; /* Center-align the content horizontally */
-     
-            font-family: 'Noto Serif Devanagari', 'Poppins', 'Roboto Condensed', sans-serif;
-font-family: 'Poppins', sans-serif;
-      font-family: 'Roboto Condensed', sans-serif;
+      text-align: center;
+      font-family: 'Noto Serif Devanagari', 'Poppins', 'Roboto Condensed', sans-serif;
     }
+    
    
 
 
