@@ -167,11 +167,10 @@ export const generatePdf = async (req, res) => {
     // Create HTML content for the PDF using the job data
     const htmlContent = `
     <!DOCTYPE html>
-    <html lang="mr">
+    <html>
     <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
-   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta charset="UTF-8"> 
+   
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@300&family=Poppins:wght@100;200;300;400;600;700&family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
     /* Add your CSS styles here */
@@ -190,17 +189,15 @@ export const generatePdf = async (req, res) => {
     table {
       border-collapse: collapse;
       width: 100%;
-      font-family:'Montserrat', sans-serif;
      
     }
     th, td {
-      border: 1px solid black;
-     
+      border: 1px solid black;   
       padding-top : 2px;
       padding-bottom:2px;
       text-align: left;
       font-size: 10px;
-      font-family: 'Montserrat', sans-serif; 
+     
      
     }
     th {
