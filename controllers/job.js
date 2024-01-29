@@ -169,7 +169,7 @@ export const generatePdf = async (req, res) => {
     <!DOCTYPE html>
     <html lang="mr">
     <head>
-    <meta charset="UTF-8"/> 
+    <meta charset="UTF-8"> 
    <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@300&family=Poppins:wght@100;200;300;400;600;700&family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
@@ -179,16 +179,11 @@ export const generatePdf = async (req, res) => {
       size: legal landscape; /* Set the page size to A4 landscape */
       margin: 10mm 20mm;     
     }
-    body {
-     
+    body { 
       text-align: center; /* Center-align the content horizontally */
-     
-            font-family:  font-family: 'Arial Unicode MS', sans-serif;
+      font-family:  font-family: 'Arial Unicode MS', sans-serif;
       font-family: 'Roboto Condensed', sans-serif;
-    }
-   
-
-
+         }
     table {
       border-collapse: collapse;
       width: 100%;
@@ -196,8 +191,7 @@ export const generatePdf = async (req, res) => {
      
     }
     th, td {
-      border: 1px solid black;
-     
+      border: 1px solid black;   
       padding-top : 2px;
       padding-bottom:2px;
       text-align: left;
