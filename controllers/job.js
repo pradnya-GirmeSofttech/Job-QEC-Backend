@@ -169,10 +169,9 @@ export const generatePdf = async (req, res) => {
     <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="${characterEncoding}">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@300&family=Poppins:wght@100;200;300;400;600;700&family=Roboto+Condensed:wght@300;400;700&display=swap"
-        rel="stylesheet">
+     <meta charset="UTF-8">
+   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@300&family=Poppins:wght@100;200;300;400;600;700&family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
     <style>
         @page {
             size: legal landscape;
@@ -238,13 +237,7 @@ export const generatePdf = async (req, res) => {
                 </tbody>
             </table>
         </div>
-        <table>
-        <tbody>
-            <tr>
-                <th style="text-align: left; font-family: 'TiroDevnagariMarathi', sans-serif;">महत्वाच्या सूचना</th>
-            </tr>
-        </tbody>
-    </table>
+       
         <div class="table-container">
             <table>
                 <thead>
