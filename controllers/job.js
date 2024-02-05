@@ -238,13 +238,13 @@ export const generatePdf = async (req, res) => {
                 </tbody>
             </table>
         </div>
-         <table>
-                <tbody>
-                   
-                        <th style="text-align: left; font-family: 'TiroDevnagariMarathi', sans-serif;">महत्वाच्या सूचना</th>
-                       
-                </tbody>
-            </table>
+        <table>
+        <tbody>
+            <tr>
+                <th style="text-align: left; font-family: 'TiroDevnagariMarathi', sans-serif;">महत्वाच्या सूचना</th>
+            </tr>
+        </tbody>
+    </table>
         <div class="table-container">
             <table>
                 <thead>
