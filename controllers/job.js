@@ -178,10 +178,10 @@ export const generatePdf = async (req, res) => {
       size: legal landscape; /* Set the page size to A4 landscape */
       margin: 10mm 20mm;     
     }
-    body { 
-      text-align: center; /* Center-align the content horizontally */
-      font-family:  font-family: 'Arial Unicode MS', sans-serif;
-         }
+   body {
+  text-align: center;
+  font-family: 'TiroDevnagariMarathi', 'Arial Unicode MS', sans-serif;
+}
          @font-face {
   font-family: 'TiroDevnagariMarathi';
   src: local('TiroDevnagariMarathi'), url(../assets/TiroDevanagariMarathi-Regular.ttf) format('opentype');
