@@ -182,6 +182,10 @@ export const generatePdf = async (req, res) => {
       text-align: center; /* Center-align the content horizontally */
       font-family:  font-family: 'Arial Unicode MS', sans-serif;
          }
+         @font-face {
+  font-family: 'TiroDevnagariMarathi';
+  src: local('TiroDevnagariMarathi'), url(../assets/TiroDevanagariMarathi-Regular.ttf) format('opentype');
+}
     table {
       border-collapse: collapse;
       width: 100%;
