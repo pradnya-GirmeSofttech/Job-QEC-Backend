@@ -208,6 +208,13 @@ export const generatePdf = async (req, res) => {
         <p style="font-family: 'Montserrat', sans-serif;">Gat.No.317,Pune-Saswad Road,Opp.Palkhi Visawa,Tal-Purander,
             Zendewadi,Pune-412-301</p>
         <h3 style="font-family: 'Montserrat', sans-serif;">Job Process Sheet</h3>
+        <table>
+        <tbody>
+            <tr>
+                <th style="text-align: left; font-family: 'TiroDevnagariMarathi', sans-serif;">महत्वाच्या सूचना</th>
+            </tr>
+        </tbody>
+    </table>
         <div class="table-container">
             <table>
                 <tbody>
