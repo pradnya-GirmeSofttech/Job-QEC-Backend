@@ -165,11 +165,13 @@ export const generatePdf = async (req, res) => {
       return res.status(404).json({ message: "Job not found" });
     }
     // Create HTML content for the PDF using the job data
+    const characterEncoding = process.env.CHARACTER_ENCODING;
+    const fontPath = process.env.FONT_PATH;
     const htmlContent = `
     <!DOCTYPE html>
     <html>
     <head>
-    <meta charset="UTF-8"> 
+    <meta charset="${characterEncoding}"> 
    
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@300&family=Poppins:wght@100;200;300;400;600;700&family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
@@ -463,7 +465,7 @@ body {
     </html>
     `;
 
-    const options = { format: "A4", margin: "10mm" };
+    const options = { format: "A4", margin: "10mm", font: fontPath };
 
     const pdfBuffer = await pdf.generatePdf({ content: htmlContent }, options);
     // Set response headers
