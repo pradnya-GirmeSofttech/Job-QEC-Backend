@@ -462,7 +462,8 @@ body {
     </body>
     </html>
     `;
-
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
     await page.setContent(htmlContent, { waitUntil: "networkidle0" });
 
     // Generate PDF
