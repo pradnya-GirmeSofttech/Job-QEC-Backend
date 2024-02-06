@@ -180,9 +180,9 @@ export const generatePdf = async (req, res) => {
       size: legal landscape; /* Set the page size to A4 landscape */
       margin: 10mm 20mm;     
     }
-   @font-face {
+  @font-face {
   font-family: 'TiroDevnagariMarathi';
-  src: local('TiroDevnagariMarathi'), url('../assets/TiroDevanagariMarathi-Regular.ttf') format('opentype');
+  src: local('TiroDevnagariMarathi'), url('../assets/TiroDevanagariMarathi-Regular.ttf') format('truetype');
 }
 
 body {
