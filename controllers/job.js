@@ -463,7 +463,7 @@ body {
     </html>
     `;
     const browser = await puppeteer.launch({
-      headless: false,
+      headless: false, // Set to true for production
       executablePath: path.join(
         "C:",
         "Program Files",
@@ -477,25 +477,50 @@ body {
       // executablePath: "C:/Program Files/Google/Chrome/Application/chrome.exe",
     });
     const page = await browser.newPage();
-    await page.setContent(htmlContent, { waitUntil: "networkidle0" });
 
-    // Generate PDF
-    const pdfBuffer = await page.pdf({
-      format: "A4",
-      printBackground: true,
-    });
+    await page.setContent(htmlContent, { waitUntil: "domcontentloaded" });
 
-    // Save the PDF buffer to a file or send it to the client
-    // For example, you can save it using fs.writeFile
-    const fs = require("fs");
-    fs.writeFileSync("example.pdf", pdfBuffer);
-    res.send(pdfBuffer);
-
-    console.log("PDF generated successfully.");
+    const pdfBuffer = await page.pdf();
 
     await browser.close();
-    // const options = { format: "A4", margin: "10mm" };
-    // // Generate PDF
+
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="job_process_sheet.pdf"`
+    );
+
+    res.send(pdfBuffer);
+    console.log("PDF successfully generated and sent");
+
+    const uniqueIdentifier = uuidv4();
+    const filename = `job${uniqueIdentifier}.pdf`;
+    pdf
+      .create(htmlContent, { format: "Letter" })
+      .toFile(filename, (err, response) => {
+        if (err) {
+          console.log(err);
+          res.status(500).send("Error generating PDF");
+        } else {
+          res.setHeader(
+            "Content-disposition",
+            `attachment; filename=${filename}`
+          );
+          res.setHeader("Content-type", "application/pdf");
+          const fileStream = fs.createReadStream(filename);
+          fileStream.pipe(res);
+
+          fs.unlink(filename, (err) => {
+            if (err) {
+              console.error("Error deleting PDF file:", err);
+            } else {
+              console.log("PDF file deleted");
+            }
+          });
+        }
+      });
+    //  const options = { format: "A4", margin: "10mm" };
+    // Generate PDF
     // const pdfBuffer = await pdf.generatePdf({ content: htmlContent }, options);
     // // Set response headers
     // res.setHeader("Content-Type", "application/pdf");
