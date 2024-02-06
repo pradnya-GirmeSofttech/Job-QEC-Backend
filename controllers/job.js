@@ -163,8 +163,7 @@ export const generatePdf = async (req, res) => {
       return res.status(404).json({ message: "Job not found" });
     }
     // Create HTML content for the PDF using the job data
-    const characterEncoding = process.env.CHARACTER_ENCODING;
-    const fontPath = process.env.FONT_PATH;
+
     const htmlContent = `
     <!DOCTYPE html>
 <html>
@@ -447,7 +446,7 @@ export const generatePdf = async (req, res) => {
 </html>
     `;
 
-    const options = { format: "A4", margin: "10mm", font: fontPath };
+    const options = { format: "A4", margin: "10mm" };
 
     const pdfBuffer = await pdf.generatePdf({ content: htmlContent }, options);
     // Set response headers
