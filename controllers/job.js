@@ -462,76 +462,19 @@ body {
     </body>
     </html>
     `;
-    const browser = await puppeteer.launch({
-      headless: false, // Set to true for production
-      // executablePath: path.join(
-      //   "C:",
-      //   "Program Files",
-      //   "Google",
-      //   "Chrome",
-      //   "Application",
-      //   "chrome.exe"
-      // ),
-      args: ["--no-sandbox", "--disabled-setupid-sandbox"],
-      ignoreDefaultArgs: ["--disable-extensions"],
-      executablePath: "C:/Program Files/Google/Chrome/Application/chrome.exe",
-      // C:\Program Files\Google\Chrome\Application
-    });
-    const page = await browser.newPage();
 
-    await page.setContent(htmlContent, { waitUntil: "domcontentloaded" });
+    const options = { format: "A4", margin: "10mm" };
 
-    const pdfBuffer = await page.pdf();
-
-    await browser.close();
-
+    const pdfBuffer = await pdf.generatePdf({ content: htmlContent }, options);
+    // Set response headers
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader(
       "Content-Disposition",
       `attachment; filename="job_process_sheet.pdf"`
     );
-
+    // Send the PDF as a response
     res.send(pdfBuffer);
     console.log("PDF successfully generated and sent");
-
-    const uniqueIdentifier = uuidv4();
-    const filename = `job${uniqueIdentifier}.pdf`;
-    pdf
-      .create(htmlContent, { format: "Letter" })
-      .toFile(filename, (err, response) => {
-        if (err) {
-          console.log(err);
-          res.status(500).send("Error generating PDF");
-        } else {
-          res.setHeader(
-            "Content-disposition",
-            `attachment; filename=${filename}`
-          );
-          res.setHeader("Content-type", "application/pdf");
-          const fileStream = fs.createReadStream(filename);
-          fileStream.pipe(res);
-
-          fs.unlink(filename, (err) => {
-            if (err) {
-              console.error("Error deleting PDF file:", err);
-            } else {
-              console.log("PDF file deleted");
-            }
-          });
-        }
-      });
-    //  const options = { format: "A4", margin: "10mm" };
-    // Generate PDF
-    // const pdfBuffer = await pdf.generatePdf({ content: htmlContent }, options);
-    // // Set response headers
-    // res.setHeader("Content-Type", "application/pdf");
-    // res.setHeader(
-    //   "Content-Disposition",
-    //   `attachment; filename="job_process_sheet.pdf"`
-    // );
-    // // Send the PDF as a response
-    // res.send(pdfBuffer);
-    // console.log("PDF successfully generated and sent");
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, error: error.message });
