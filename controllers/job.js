@@ -464,17 +464,17 @@ body {
     `;
     const browser = await puppeteer.launch({
       headless: false, // Set to true for production
-      executablePath: path.join(
-        "C:",
-        "Program Files",
-        "Google",
-        "Chrome",
-        "Application",
-        "chrome.exe"
-      ),
+      // executablePath: path.join(
+      //   "C:",
+      //   "Program Files",
+      //   "Google",
+      //   "Chrome",
+      //   "Application",
+      //   "chrome.exe"
+      // ),
       args: ["--no-sandbox", "--disabled-setupid-sandbox"],
       ignoreDefaultArgs: ["--disable-extensions"],
-      // executablePath: "C:/Program Files/Google/Chrome/Application/chrome.exe",
+      executablePath: "C:/Program Files/Google/Chrome/Application/chrome.exe",
     });
     const page = await browser.newPage();
 
