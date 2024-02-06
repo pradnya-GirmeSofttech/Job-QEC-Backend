@@ -462,27 +462,26 @@ export const generatePdf = async (req, res) => {
     </html>
     `;
 
-    // const browser = await puppeteer.launch({
-    //   headless: false, // Set to true for production
-    //   executablePath: path.join(
-    //     "C:",
-    //     "Program Files",
-    //     "Google",
-    //     "Chrome",
-    //     "Application",
-    //     "chrome.exe"
-    //   ),
-    //   args: ["--no-sandbox", "--disabled-setupid-sandbox"],
-    //   ignoreDefaultArgs: ["--disable-extensions"],
-    //   // executablePath: "C:/Program Files/Google/Chrome/Application/chrome.exe",
-    // });
-    // const page = await browser.newPage();
-    // // Set content and wait for rendering
-    // await page.setContent(htmlContent, { waitUntil: "domcontentloaded" });
+    await page.setContent(htmlContent, { waitUntil: "networkidle0" });
+
+    // Generate PDF
+    const pdfBuffer = await page.pdf({
+      format: "A4",
+      printBackground: true,
+    });
+
+    // Save the PDF buffer to a file or send it to the client
+    // For example, you can save it using fs.writeFile
+    const fs = require("fs");
+    fs.writeFileSync("example.pdf", pdfBuffer);
+    res.send(pdfBuffer);
+
+    console.log("PDF generated successfully.");
+
+    await browser.close();
+    // const options = { format: "A4", margin: "10mm" };
     // // Generate PDF
-    // const pdfBuffer = await page.pdf();
-    // // Close the browser
-    // await browser.close();
+    // const pdfBuffer = await pdf.generatePdf({ content: htmlContent }, options);
     // // Set response headers
     // res.setHeader("Content-Type", "application/pdf");
     // res.setHeader(
@@ -492,51 +491,6 @@ export const generatePdf = async (req, res) => {
     // // Send the PDF as a response
     // res.send(pdfBuffer);
     // console.log("PDF successfully generated and sent");
-    // Generate the PDF
-
-    // const uniqueIdentifier = uuidv4();
-    // const filename = `job${uniqueIdentifier}.pdf`;
-
-    // pdf
-    //   .create(htmlContent, { format: "Letter" })
-    //   .toFile(filename, (err, response) => {
-    //     if (err) {
-    //       console.log(err);
-
-    //       res.status(500).send("Error generating PDF");
-    //     } else {
-    //       // Send the generated PDF as a response
-    //       res.setHeader(
-    //         "Content-disposition",
-    //         `attachment; filename=${filename}`
-    //       );
-    //       res.setHeader("Content-type", "application/pdf");
-    //       const fileStream = fs.createReadStream(filename);
-    //       fileStream.pipe(res);
-
-    // Optionally, you can delete the file after sending it
-    // fs.unlink(filename, (err) => {
-    //   if (err) {
-    //     console.error("Error deleting PDF file:", err);
-    //   } else {
-    //     console.log("PDF file deleted");
-    //   }
-    // });
-    // }
-    // });
-
-    const options = { format: "A4", margin: "10mm" };
-    // Generate PDF
-    const pdfBuffer = await pdf.generatePdf({ content: htmlContent }, options);
-    // Set response headers
-    res.setHeader("Content-Type", "application/pdf");
-    res.setHeader(
-      "Content-Disposition",
-      `attachment; filename="job_process_sheet.pdf"`
-    );
-    // Send the PDF as a response
-    res.send(pdfBuffer);
-    console.log("PDF successfully generated and sent");
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, error: error.message });
