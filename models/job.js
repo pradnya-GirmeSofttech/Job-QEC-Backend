@@ -30,7 +30,7 @@ const jobSchema = new mongoose.Schema(
       required: true,
     },
     dragNo: {
-      type: Number,
+      type: String,
       required: true,
     },
     user: {
