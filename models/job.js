@@ -3,11 +3,11 @@ import mongoose from "mongoose";
 const jobSchema = new mongoose.Schema(
   {
     soWo: {
-      type: Number,
+      type: String,
       required: true,
     },
     prodOrderNo: {
-      type: Number,
+      type: String,
     },
 
     estimatedtotalCT: {
@@ -26,7 +26,7 @@ const jobSchema = new mongoose.Schema(
       required: true,
     },
     poNo: {
-      type: Number,
+      type: String,
       required: true,
     },
     dragNo: {
