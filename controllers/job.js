@@ -521,10 +521,11 @@ export const generateReport = async (req, res) => {
 // };
 export const copyJob = async (req, res) => {
   try {
-    const { jobId } = req.params;
+    const { id } = req.params;
+    console.log("jobId",id)
     const user = req.user._id;
 
-    const originalJob = await Job.findById(jobId);
+    const originalJob = await Job.findById(id);
 
     if (!originalJob) {
       return res.status(404).json({ success: false, message: "Job not found" });
