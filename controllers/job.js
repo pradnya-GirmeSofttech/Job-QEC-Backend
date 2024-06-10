@@ -488,3 +488,70 @@ export const generateReport = async (req, res) => {
     res.status(500).json({ success: false, error: error.message });
   }
 };
+
+// export const copyJob = async (req, res) => {
+//   try {
+//     const originalJobId = req.params.id;
+//     console.log("originalJobId", originalJobId);
+//     // Find the original job by ID
+//     const originalJob = await Job.findById(originalJobId);
+//     if (!originalJob) {
+//       return res.status(404).json({
+//         success: false,
+//         message: "Job not found",
+//       });
+//     }
+
+//     // Create a new job with the same details as the original job (excluding _id)
+//     const { _id, ...newJobData } = originalJob.toObject(); // Convert to plain JavaScript object to exclude _id
+//     newJobData.jobName = `${newJobData.jobName} (Copy)`; // Add "(Copy)" to job name
+
+//     // Create the new job
+//     const newJob = await Job.create(newJobData);
+
+//     res.status(201).json({
+//       success: true,
+//       message: "Job copied successfully",
+//       Job: newJob,
+//     });
+//   } catch (error) {
+//     console.error("Error in copyJob:", error);
+//     res.status(500).json({ success: false, error: error.message });
+//   }
+// };
+export const copyJob = async (req, res) => {
+  try {
+    const { jobId } = req.params;
+    const user = req.user._id;
+
+    const originalJob = await Job.findById(jobId);
+
+    if (!originalJob) {
+      return res.status(404).json({ success: false, message: "Job not found" });
+    }
+
+    // Create a new job with the same details as the original job
+    const newJob = await Job.create({
+      soWo: originalJob.soWo,
+      prodOrderNo: originalJob.prodOrderNo,
+      woDate: originalJob.woDate,
+      estimatedtotalCT: originalJob.estimatedtotalCT,
+      actualtotalCT: originalJob.actualtotalCT,
+      jobName: originalJob.jobName,
+      poNo: originalJob.poNo,
+      dragNo: originalJob.dragNo,
+      user: user,
+      processTable: originalJob.processTable,
+    });
+    console.log("newJob", newJob);
+    res.status(201).json({
+      success: true,
+      message: "Job duplicated successfully",
+      Job: newJob,
+    });
+  } catch (error) {
+    // Handle any errors and respond with an error message
+    console.error(error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+};

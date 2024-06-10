@@ -14,7 +14,6 @@ export const createMachine = async (req, res) => {
       Machine: newMachine,
     });
   } catch (error) {
-    // Handle any errors and respond with an error message
     console.error(error);
     res.status(500).json({ success: false, error: error.message });
   }
