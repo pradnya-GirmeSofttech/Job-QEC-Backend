@@ -9,6 +9,7 @@ import {
   updateJob,
   viewJob,
   generateReport,
+  copyJob,
 } from "../controllers/job.js";
 
 const router = express.Router();
@@ -21,5 +22,6 @@ router.route("/viewjob/:id").get(isAuthenticated, viewJob);
 router.route("/jobs").get(isAuthenticated, getAllJob);
 router.route("/generatePdf/:id").get(generatePdf);
 router.route("/reports/generate").get(isAuthenticated, generateReport);
+router.route("/copyJob/:id").post(isAuthenticated,copyJob);
 
 export default router;

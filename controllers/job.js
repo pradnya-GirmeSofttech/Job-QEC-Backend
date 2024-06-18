@@ -488,3 +488,51 @@ export const generateReport = async (req, res) => {
     res.status(500).json({ success: false, error: error.message });
   }
 };
+
+
+export const copyJob = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { count } = req.body; // assuming count is passed in the request body
+    console.log("jobId", id);
+    const user = req.user._id;
+
+    const originalJob = await Job.findById(id);
+
+    if (!originalJob) {
+      return res.status(404).json({ success: false, message: "Job not found" });
+    }
+
+    const duplicatedJobs = [];
+
+    for (let i = 0; i < count; i++) {
+      // Create a new job with the same details as the original job
+      const newJob = await Job.create({
+        soWo: originalJob.soWo,
+        prodOrderNo: originalJob.prodOrderNo,
+        woDate: originalJob.woDate,
+        estimatedtotalCT: originalJob.estimatedtotalCT,
+        actualtotalCT: originalJob.actualtotalCT,
+        jobName: originalJob.jobName,
+        poNo: originalJob.poNo,
+        dragNo: originalJob.dragNo,
+        user: user,
+        processTable: originalJob.processTable,
+      });
+      duplicatedJobs.push(newJob);
+    }
+
+    console.log("duplicatedJobs", duplicatedJobs);
+
+    res.status(201).json({
+      success: true,
+      message: `Job duplicated ${count} times successfully`,
+      Jobs: duplicatedJobs,
+    });
+  } catch (error) {
+    // Handle any errors and respond with an error message
+    console.error(error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
+
