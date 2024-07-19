@@ -317,17 +317,18 @@ export const generatePdf = async (req, res) => {
 
     const options = { format: "legal", orientation: "landscape" };
 
-    pdf.create(htmlContent, options).toBuffer((err, buffer) => {
-      if (err) {
-        console.error("Error generating PDF:", err);
-        return res.status(500).json({ success: false, error: err.message });
-      }
-      res.setHeader("Content-Type", "application/pdf");
-      res.setHeader("Content-Disposition", `attachment; filename="job_process_sheet.pdf"`);
-      res.send(buffer);
-    });
+    const pdfBuffer = await pdf.generatePdf({ content: htmlContent }, options);
+    // Set response headers
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="job_process_sheet.pdf"`
+    );
+    // Send the PDF as a response
+    res.send(pdfBuffer);
+    console.log("PDF successfully generated and sent");
   } catch (error) {
-    console.error("Error generating PDF:", error);
+    console.error(error);
     res.status(500).json({ success: false, error: error.message });
   }
 };
