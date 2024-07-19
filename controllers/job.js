@@ -146,323 +146,193 @@ export const getAllJob = async (req, res) => {
   }
 };
 
+
+
+
 export const generatePdf = async (req, res) => {
   try {
     const jobId = req.params.id;
 
     // Fetch job data from the database (you can use Mongoose or your preferred ORM)
     const job = await Job.findById(jobId);
-    job?.processTable.map((row, rowIndex) => {
-      {
-        row.processTableData.map((item, index) => {
-          console.log("jobPDF", item);
-        });
-      }
-    });
     if (!job) {
       return res.status(404).json({ message: "Job not found" });
     }
-    // Create HTML content for the PDF using the job data
 
     const htmlContent = `
-    <!DOCTYPE html>
-<html>
-<head>
-     <meta charset="UTF-8">
-   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@300&family=Poppins:wght@100;200;300;400;600;700&family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
-    <style>
-    <style>
-        @page {
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="UTF-8">
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@300&family=Poppins:wght@100;200;300;400;600;700&family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
+        <style>
+          @page {
             size: legal landscape;
-            margin: 10mm 20mm;
-        }
-        @font-face {
-            font-family: 'TiroDevnagariMarathi';
-            src: local('TiroDevnagariMarathi'), url('../assets/TiroDevanagariMarathi-Regular.ttf') format('truetype');
-        }
-        body {
+            margin: 10mm;
+          }
+          body {
+            font-family: 'Poppins', sans-serif;
             text-align: center;
-            font-family: 'TiroDevnagariMarathi', 'Arial Unicode MS', sans-serif;
-        }
-        table {
+            width: 100%;
+          }
+          table {
             border-collapse: collapse;
             width: 100%;
-        }
-        th,
-        td {
+          }
+          th, td {
             border: 1px solid black;
-            padding-top: 2px;
-            padding-bottom: 2px;
+            padding: 5px;
             text-align: left;
             font-size: 10px;
-        }
-        th {
-           background-color: #f2f2f2;
-        }
-    </style>
-</head>
-<body>
-    <div class="box">
-        <h2 style="font-family: 'Montserrat', sans-serif;">Girme Technologies PVT LTD.</h2>
-        <p style="font-family: 'Montserrat', sans-serif;">Gat.No.317,Pune-Saswad Road,Opp.Palkhi Visawa,Tal-Purander,
-            Zendewadi,Pune-412-301</p>
-        <h3 style="font-family: 'Montserrat', sans-serif;">Job Process Sheet</h3>
-        <table>
-        <tbody>
+          }
+          th {
+            background-color: #f2f2f2;
+          }
+          .header-table td {
+            border: none;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <h2>QUALITY ENGINEERING CO.</h2>
+          <p>Gat No.317, Pune-Saswad Road, Opp. Palkhi Visawa, Tal.-Purandar, Zendewadi, Pune-412301</p>
+          <h3>JOB PROCESS SHEET</h3>
+          <table class="header-table">
             <tr>
-                <th style="text-align: left; font-family: 'TiroDevnagariMarathi', sans-serif;">महत्वाच्या सूचना</th>
+              <td>SO/WO No: ${job?.soWo}</td>
+              <td>Pro Ord No: ${job?.prodOrderNo}</td>
+              <td>W.O.Date: ${format(new Date(job?.woDate), "dd/MM/yyyy")}</td>
+              <td>Total CT (Min): ${job?.estimatedtotalCT}</td>
             </tr>
-        </tbody>
-    </table>
-        <div class="table-container">
-            <table>
-                <tbody>
-                    <tr>
-                        <td style="text-align: left;">SO/Wo No</td>
-                        <td style="text-align: left;">${job?.soWo}</td>
-                        <td style="text-align: left;">Prod.Order No : ${
-                          job?.prodOrderNo
-                        }</td>
-                        <td>WO Date : ${format(
-                          new Date(job?.woDate),
-                          "dd/MM/yyyy"
-                        )}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total
-                            CT : ${job?.estimatedtotalCT}</td>
-                    </tr>
-                    <tr>
-                        <td>Job Name</td>
-                        <td colspan="2">${job?.jobName}</td>
-                        <td colspan="2">PO No : ${job?.poNo}</td>
-                    </tr>
-                    <tr>
-                        <td>Drag No</td>
-                        <td colspan="2">${job?.dragNo}</td>
-                        <td colspan="2"></td>
-                    </tr>
-                    
-                </tbody>
-            </table>
-        </div>
-       
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Sr.No</th>
-                        <th style="width: 400px;">Process</th>
-                        <th style="width: 200px;">Description</th>
-                        <th style="width: 400px;">Machine Name</th>
-                        <th style="width: 400px;">Tooling Used</th>
-                        <th style="width: 80px;">DC</th>
-                        <th style="width: 50px;">Feed</th>
-                        <th style="width: 50px;">CT(min)</th>
-                        <th style="width: 50px;">Start Date</th>
-                        <th style="width: 50px;">Start Time</th>
-                        <th style="width: 50px;">End Date</th>
-                        <th style="width: 50px;">End Time</th>
-                        <th style="width: 50px;">Ideal Code</th>
-                        <th style="width: 50px;">Start Time</th>
-                        <th style="width: 50px;">End Time</th>
-                    </tr>
-                </thead>
-               ${job?.processTable.map((row, rowIndex) => {
-                 return `
+            <tr>
+              <td>Job Name: ${job?.jobName}</td>
+              <td>PO No: ${job?.poNo}</td>
+              <td colspan="2"></td>
+            </tr>
+            <tr>
+              <td>Drg No: ${job?.dragNo}</td>
+              <td colspan="3"></td>
+            </tr>
+          </table>
+          <table>
+            <thead>
+              <tr>
+                <th>Sr.No</th>
+                <th>Processes</th>
+                <th>Description</th>
+                <th>Machine Name</th>
+                <th>Tooling Used</th>
+                <th>DC</th>
+                <th>Feed</th>
+                <th>CT (Min)</th>
+                <th>Start Date</th>
+                <th>Start Time</th>
+                <th>End Date</th>
+                <th>End Time</th>
+                <th>Idle Code</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${job?.processTable.map((row, rowIndex) => `
                 <tr>
-                    <td>${rowIndex + 1}</td>
-                    <td>${row.processName}</td>
-                    <td style="text-align: left;"></td>
-                    <td style="text-align: left;"></td>
-                    <td style="text-align: left;"></td>
-                    <td style="text-align: left;"></td>
-                    <td style="text-align: left;"></td>
-                    <td style="text-align: left;"></td>
-                    <td style="text-align: left;"></td>
-                    <td style="text-align: left;"></td>
-                    <td style="text-align: left;"></td>
-                    <td style="text-align: left;"></td>
-                    <td style="text-align: left;"></td>
-                    <td style="text-align: left;"></td>
-                    <td style="text-align: left;"></td>
+                  <td>${rowIndex + 1}</td>
+                  <td>${row.processName}</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
                 </tr>
-                ${row.processTableData
-                  .map((item, index) => {
-                    const idleCode = row.processTableData[index]?.idleCode;
-                    let displayIdleCode = idleCode;
-                    if (idleCode === "No Power (Electricity)") {
-                      displayIdleCode = "1";
-                    } else if (idleCode === "Drawing Issue") {
-                      displayIdleCode = "2";
-                    } else if (idleCode === "Weekly Off") {
-                      displayIdleCode = "3";
-                    } else if (idleCode === "Material Issue") {
-                      displayIdleCode = "4";
-                    } else if (idleCode === "No Crane (Electricity)") {
-                      displayIdleCode = "5";
-                    } else if (idleCode === "No Air (Electricity)") {
-                      displayIdleCode = "6";
-                    } else if (
-                      idleCode ===
-                      "Stores - Collection of Tools/Drags/Instruments/Gauges etc (Electricity)"
-                    ) {
-                      displayIdleCode = "7";
-                    } else if (idleCode === "Minor Machine Breakdown") {
-                      displayIdleCode = "8";
-                    } else if (
-                      idleCode === "Waiting for dicision (Electricity)"
-                    ) {
-                      displayIdleCode = "9";
-                    } else if (
-                      idleCode === "Discountinue current load (Electricity)"
-                    ) {
-                      displayIdleCode = "10";
-                    } else if (idleCode === "Availability of Co worker load") {
-                      displayIdleCode = "11";
-                    } else if (idleCode === "Operator Absent/ Late mark") {
-                      displayIdleCode = "12";
-                    } else if (idleCode === "No Load/ No Plan") {
-                      displayIdleCode = "13";
-                    } else if (
-                      idleCode === "Rework during Operations (Electricity)"
-                    ) {
-                      displayIdleCode = "14";
-                    } else if (idleCode === "Planned Maintainance") {
-                      displayIdleCode = "15";
-                    } else if (idleCode === "Unskilled operator on machine") {
-                      displayIdleCode = "16";
-                    } else if (
-                      idleCode === "Use of Worm out tooling/ Tooling problem"
-                    ) {
-                      displayIdleCode = "17";
-                    } else if (
-                      idleCode ===
-                      "Stores - Collection of Tools/Drags/Instruments/Gauges etc (Electricity)"
-                    ) {
-                      displayIdleCode = "18";
-                    } else if (
-                      idleCode ===
-                      "Searching and collecting componenet to be loaded"
-                    ) {
-                      displayIdleCode = "19";
-                    } else if (
-                      idleCode ===
-                      "Operator shifted for other work during operations"
-                    ) {
-                      displayIdleCode = "20";
-                    } else if (idleCode === "Operator not allocated") {
-                      displayIdleCode = "21";
-                    } else if (idleCode === "Process Deviation") {
-                      displayIdleCode = "22";
-                    } else if (idleCode === "Maintenance Team Availability") {
-                      displayIdleCode = "23";
-                    } else if (idleCode === "Inspection on Machine") {
-                      displayIdleCode = "24";
-                    }
-                    return `
-                <tr>
+                ${row.processTableData.map((item, index) => `
+                  <tr>
                     <td>${index + 1}</td>
-                    <td>${row.processTableData[index]?.process}</td>
-                    <td>${row.processTableData[index]?.description}</td>
-                    <td>${row.processTableData[index]?.machineName}</td>
-                    <td>${row.processTableData[index]?.toolingUsed}</td>
-                    <td style="width: 80px;">${
-                      row.processTableData[index]?.dc
-                    }</td>
-                    <td style="width: 80px;">${
-                      row.processTableData[index]?.feed
-                    }</td>
-                    <td style="width: 80px;">${row.processTableData[
-                      index
-                    ]?.actualCT.toFixed(2)}</td>
-                    <td style="width: 50px;">${format(
-                      new Date(row.processTableData[index]?.startDate),
-                      "dd/MM/yyyy"
-                    )}</td>
-                    <td style="width: 80px;">${
-                      row.processTableData[index]?.startTime
-                    }</td>
-                    <td style="width: 80px;">${format(
-                      new Date(row.processTableData[index]?.endDate),
-                      "dd/MM/yyyy"
-                    )}</td>
-                    <td style="width: 80px;">${
-                      row.processTableData[index]?.endTime
-                    }</td>
-                    <td style="width: 80px;">${displayIdleCode}</td>
-                    <td style="width: 80px;">${
-                      row.processTableData[index]?.startTime1
-                    }</td>
-                    <td style="width: 80px;">${
-                      row.processTableData[index]?.endTime1
-                    }</td>
-                </tr>
-                `;
-                  })
-                  .join("")}
-                `;
-               })}
-                </tbody>
-            </table>
+                    <td>${item.process}</td>
+                    <td>${item.description}</td>
+                    <td>${item.machineName}</td>
+                    <td>${item.toolingUsed}</td>
+                    <td>${item.dc}</td>
+                    <td>${item.feed}</td>
+                    <td>${item.actualCT.toFixed(2)}</td>
+                    <td>${format(new Date(item.startDate), "dd/MM/yyyy")}</td>
+                    <td>${item.startTime}</td>
+                    <td>${format(new Date(item.endDate), "dd/MM/yyyy")}</td>
+                    <td>${item.endTime}</td>
+                    <td>${item.idleCode}</td>
+                    <td>${item.startTime1}</td>
+                    <td>${item.endTime1}</td>
+                  </tr>
+                `).join('')}
+              `).join('')}
+            </tbody>
+          </table>
+          <table class="idle-codes">
+            <tr>
+              <td>1. No Power (Electricity)</td>
+              <td>5. No Crane</td>
+              <td>9. Waiting for Decision</td>
+              <td>13. No Load/No Plan</td>
+              <td>17. Use of Worn out Tooling/Tooling Problem</td>
+              <td>21. Operator not allocated</td>
+            </tr>
+            <tr>
+              <td>2. Drawing Issue</td>
+              <td>6. No Air</td>
+              <td>10. Discontinue current load</td>
+              <td>14. Rework during Operations</td>
+              <td>18. Stores - Collection of Tools/Drags/Instruments/Gauges etc (Electricity)</td>
+              <td>22. Process Deviation</td>
+            </tr>
+            <tr>
+              <td>3. Weekly Off</td>
+              <td>7. Stores - Collection of Tools/Drags/Instruments/Gauges etc</td>
+              <td>11. Availability of Co worker load</td>
+              <td>15. Planned Maintenance</td>
+              <td>19. Searching and collecting component to be loaded</td>
+              <td>23. Maintenance Team Availability</td>
+            </tr>
+            <tr>
+              <td>4. Material Issue</td>
+              <td>8. Minor Machine Breakdown</td>
+              <td>12. Operator Absent/Late mark</td>
+              <td>16. Unskilled operator on machine</td>
+              <td>20. Operator shifted for other work during operations</td>
+              <td>24. Inspection on Machine</td>
+            </tr>
+          </table>
         </div>
-    </div>
-    <div class="table-container" style="margin-top:10px">
-        <table>
-            <tr>
-                <td style="text-align: left;">1. No Power (Electricity)</td>
-                <td style="text-align: left;">5. No Crane (Electricity)</td>
-                <td style="text-align: left;">9. Waiting for dicision (Electricity)</td>
-                <td style="text-align: left;">13. No Load/ No Plan</td>
-                <td style="text-align: left;">17. Use of Worm out tooling/ Tooling problem</td>
-                <td style="text-align: left;">21. Operator not allocated</td>
-            </tr>
-            <tr>
-                <td style="text-align: left;">2. Drawing Issue</td>
-                <td style="text-align: left;">6. No Air (Electricity)</td>
-                <td style="text-align: left;">10. Discountinue current load (Electricity)</td>
-                <td style="text-align: left;">14. Rework during Operations (Electricity)</td>
-                <td style="text-align: left;">18. Stores - Collection of Tools/Drags/Instruments/Gauges etc
-                    (Electricity)</td>
-                <td style="text-align: left;">22. Process Deviation</td>
-            </tr>
-            <tr>
-                <td style="text-align: left;">3. Weekly Off</td>
-                <td style="text-align: left;">7. Stores - Collection of Tools/Drags/Instruments/Gauges etc (Electricity)
-                </td>
-                <td style="text-align: left;">11. Availability of Co worker load</td>
-                <td style="text-align: left;">15. Planned Maintainance</td>
-                <td style="text-align: left;">19. Searching and collecting componenet to be loaded</td>
-                <td style="text-align: left;">23. Mentance Team Availability</td>
-            </tr>
-            <tr>
-                <td style="text-align: left;">4. Material Issue</td>
-                <td style="text-align: left;">8. Minor Machine Breakdown</td>
-                <td style="text-align: left;">12. Operator Absent/ Late mark</td>
-                <td style="text-align: left;">16. Unskilled operator on machine</td>
-                <td style="text-align: left;">20. Operator shifted for other work during operations </td>
-                <td style="text-align: left;">24. Inspection on Machine</td>
-            </tr>
-        </table>
-    </div>
-</body>
-</html>
+      </body>
+      </html>
     `;
 
-    const options = { format: "A4", margin: "10mm" };
+    const options = { format: "legal", orientation: "landscape" };
 
-    const pdfBuffer = await pdf.generatePdf({ content: htmlContent }, options);
-    // Set response headers
-    res.setHeader("Content-Type", "application/pdf");
-    res.setHeader(
-      "Content-Disposition",
-      `attachment; filename="job_process_sheet.pdf"`
-    );
-    // Send the PDF as a response
-    res.send(pdfBuffer);
-    console.log("PDF successfully generated and sent");
+    pdf.create(htmlContent, options).toBuffer((err, buffer) => {
+      if (err) {
+        console.error("Error generating PDF:", err);
+        return res.status(500).json({ success: false, error: err.message });
+      }
+      res.setHeader("Content-Type", "application/pdf");
+      res.setHeader("Content-Disposition", `attachment; filename="job_process_sheet.pdf"`);
+      res.send(buffer);
+    });
   } catch (error) {
-    console.error(error);
+    console.error("Error generating PDF:", error);
     res.status(500).json({ success: false, error: error.message });
   }
 };
+
+
 
 // Reports
 export const generateReport = async (req, res) => {
