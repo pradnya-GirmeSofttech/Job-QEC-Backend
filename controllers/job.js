@@ -195,7 +195,7 @@ export const generatePdf = async (req, res) => {
       </head>
       <body>
         <div class="container">
-          <h2>QUALITY ENGINEERING CO.</h2>
+          <h2>Girme Technologies PVT LTD.</h2>
           <p>Gat No.317, Pune-Saswad Road, Opp. Palkhi Visawa, Tal.-Purandar, Zendewadi, Pune-412301</p>
           <h3>JOB PROCESS SHEET</h3>
           <table class="header-table">
