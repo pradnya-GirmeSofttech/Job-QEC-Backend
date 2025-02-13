@@ -4,7 +4,7 @@ import { User } from "../models/users.js";
 export const isAuthenticated = async (req, res, next) => {
   try {
     // const { token } = req.cookies;
-    console.log("token", req.headers);
+    // console.log("token", req.headers);
     if (!req.headers.authorization) {
       return next(
         new Error(400, "No authorization token is sent with request")

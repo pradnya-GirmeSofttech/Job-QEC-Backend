@@ -146,9 +146,6 @@ export const getAllJob = async (req, res) => {
   }
 };
 
-
-
-
 export const generatePdf = async (req, res) => {
   try {
     const jobId = req.params.id;
@@ -167,8 +164,8 @@ export const generatePdf = async (req, res) => {
         <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@300&family=Poppins:wght@100;200;300;400;600;700&family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
         <style>
           @page {
-            size: legal landscape;
-            margin: 10mm;
+            size: 14in 8.5in landscape; /* Force Legal landscape size */
+            margin: 1mm;
           }
           body {
             font-family: 'Poppins', sans-serif;
@@ -236,7 +233,9 @@ export const generatePdf = async (req, res) => {
               </tr>
             </thead>
             <tbody>
-              ${job?.processTable.map((row, rowIndex) => `
+              ${job?.processTable
+                .map(
+                  (row, rowIndex) => `
                 <tr>
                   <td>${rowIndex + 1}</td>
                   <td>${row.processName}</td>
@@ -254,7 +253,9 @@ export const generatePdf = async (req, res) => {
                   <td></td>
                   <td></td>
                 </tr>
-                ${row.processTableData.map((item, index) => `
+                ${row.processTableData
+                  .map(
+                    (item, index) => `
                   <tr>
                     <td>${index + 1}</td>
                     <td>${item.process}</td>
@@ -272,8 +273,12 @@ export const generatePdf = async (req, res) => {
                     <td>${item.startTime1}</td>
                     <td>${item.endTime1}</td>
                   </tr>
-                `).join('')}
-              `).join('')}
+                `
+                  )
+                  .join("")}
+              `
+                )
+                .join("")}
             </tbody>
           </table>
           <table class="idle-codes">
@@ -315,7 +320,13 @@ export const generatePdf = async (req, res) => {
       </html>
     `;
 
-    const options = { format: "legal", orientation: "landscape" };
+    const options = {
+      width: "14in", // Explicitly set Legal width
+      height: "8.5in", // Explicitly set Legal height
+      printBackground: true, // Ensures backgrounds are printed
+      margin: { top: "1mm", right: "1mm", bottom: "1mm", left: "1mm" }, // Set margins
+      preferCSSPageSize: true, // Ensures CSS page size is used
+    };
 
     const pdfBuffer = await pdf.generatePdf({ content: htmlContent }, options);
     // Set response headers
@@ -332,8 +343,6 @@ export const generatePdf = async (req, res) => {
     res.status(500).json({ success: false, error: error.message });
   }
 };
-
-
 
 // Reports
 export const generateReport = async (req, res) => {
@@ -359,7 +368,6 @@ export const generateReport = async (req, res) => {
     res.status(500).json({ success: false, error: error.message });
   }
 };
-
 
 export const copyJob = async (req, res) => {
   try {
@@ -406,4 +414,3 @@ export const copyJob = async (req, res) => {
     res.status(500).json({ success: false, error: error.message });
   }
 };
-
