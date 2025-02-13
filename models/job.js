@@ -84,6 +84,8 @@ const jobSchema = new mongoose.Schema(
             feed: { type: Number },
             rpm: { type: Number },
             noh: { type: Number },
+            requiredDimension: { type: Number },
+            actualDimension: { type: Number },
             estimatedHrs: {
               type: Number,
             },
